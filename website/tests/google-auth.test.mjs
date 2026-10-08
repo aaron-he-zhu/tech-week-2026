@@ -57,6 +57,17 @@ function seed(db, visitorId, eventId, score, updatedAt) {
   db.sql
     .prepare('INSERT INTO ratings(visitor_id,event_id,score,updated_at) VALUES(?,?,?,?)')
     .run(visitorId, eventId, score, updatedAt);
+  db.sql
+    .prepare(
+      'INSERT INTO transcript_links(visitor_id,event_id,url,title,updated_at) VALUES(?,?,?,?,?)',
+    )
+    .run(
+      visitorId,
+      eventId,
+      'https://example.com/transcript/' + updatedAt,
+      'Transcript ' + updatedAt,
+      updatedAt,
+    );
 }
 async function login(db, source, sub = 'google-user-1') {
   const c = await createChallenge(db, source.hash);
@@ -106,7 +117,7 @@ test('first login retains nickname and contributions while retiring anonymous re
   assert.equal(result.visitor.google_sub, 'google-user-1');
   assert.equal(await findIdentity(db, a.hash), null);
   assert.equal(result.visitor.share_token, null);
-  for (const table of ['wishes', 'address_tips', 'ratings'])
+  for (const table of ['wishes', 'address_tips', 'ratings', 'transcript_links'])
     assert.equal(
       db.sql.prepare(`SELECT COUNT(*) AS n FROM ${table} WHERE visitor_id=?`).get(result.visitor.id)
         .n,
@@ -119,7 +130,7 @@ test('first login retains nickname and contributions while retiring anonymous re
   assert.ok(!result.visitor.nickname.includes('private'));
 });
 
-test('cross-device merge deduplicates wishes and uses newest address/rating while retaining the account nickname', async () => {
+test('cross-device merge deduplicates wishes and uses newest address/rating/transcript while retaining the account nickname', async () => {
   const db = database(),
     a = await guest(db, '原昵称');
   seed(db, a.visitor.id, id, 4, 200);
@@ -134,6 +145,14 @@ test('cross-device merge deduplicates wishes and uses newest address/rating whil
   assert.equal(db.sql.prepare('SELECT COUNT(*) AS n FROM ratings WHERE event_id=?').get(id).n, 1);
   assert.equal(db.sql.prepare('SELECT score FROM ratings WHERE event_id=?').get(id).score, 2);
   assert.equal(
+    db.sql.prepare('SELECT COUNT(*) AS n FROM transcript_links WHERE event_id=?').get(id).n,
+    1,
+  );
+  assert.equal(
+    db.sql.prepare('SELECT url FROM transcript_links WHERE event_id=?').get(id).url,
+    'https://example.com/transcript/300',
+  );
+  assert.equal(
     db.sql.prepare('SELECT address FROM address_tips WHERE event_id=?').get(id).address,
     'Address 300',
   );
@@ -143,6 +162,14 @@ test('cross-device merge deduplicates wishes and uses newest address/rating whil
   seed(db, c.visitor.id, id, 1, 50);
   await login(db, c);
   assert.equal(db.sql.prepare('SELECT score FROM ratings WHERE event_id=?').get(id).score, 2);
+  assert.equal(
+    db.sql.prepare('SELECT COUNT(*) AS n FROM transcript_links WHERE event_id=?').get(id).n,
+    1,
+  );
+  assert.equal(
+    db.sql.prepare('SELECT url FROM transcript_links WHERE event_id=?').get(id).url,
+    'https://example.com/transcript/300',
+  );
 });
 
 test('nonce is session-bound, one-use, expires and must match the verified token', async () => {
@@ -226,10 +253,16 @@ test('a failed database merge rolls back all transfers and nonce consumption', a
     a = await guest(db);
   seed(db, a.visitor.id, id, 5, 100);
   db.sql.exec(
-    "CREATE TRIGGER fail_merge BEFORE INSERT ON ratings WHEN NEW.visitor_id LIKE 'google-%' BEGIN SELECT RAISE(ABORT,'forced merge failure'); END;",
+    "CREATE TRIGGER fail_merge BEFORE INSERT ON transcript_links WHEN NEW.visitor_id LIKE 'google-%' BEGIN SELECT RAISE(ABORT,'forced merge failure'); END;",
   );
   await assert.rejects(login(db, a));
   assert.ok(await findIdentity(db, a.hash));
+  assert.equal(
+    db.sql
+      .prepare('SELECT COUNT(*) AS n FROM transcript_links WHERE visitor_id=?')
+      .get(a.visitor.id).n,
+    1,
+  );
   assert.equal(db.sql.prepare('SELECT COUNT(*) AS n FROM google_accounts').get().n, 0);
   assert.equal(db.sql.prepare('SELECT COUNT(*) AS n FROM google_login_uses').get().n, 0);
   assert.equal(

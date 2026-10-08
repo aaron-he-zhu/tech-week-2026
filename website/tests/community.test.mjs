@@ -214,7 +214,7 @@ test('input limits, invalid activities and shared read-only credentials are enfo
   );
   const share = (await call('/v1/share', { method: 'POST', data: { enabled: true }, token })).data
     .shareToken;
-  for (const kind of ['addresses', 'ratings'])
+  for (const kind of ['addresses', 'ratings', 'transcripts'])
     assert.equal(
       (await call('/v1/' + kind + '/' + id, { method: 'DELETE', token: share })).status,
       401,
@@ -252,16 +252,34 @@ test('public lists paginate independently without exposing ownership identifiers
     DB.sql
       .prepare('INSERT INTO ratings(visitor_id,event_id,score,updated_at) VALUES(?,?,?,?)')
       .run(visitor, id, 5, i);
+    DB.sql
+      .prepare(
+        'INSERT INTO transcript_links(visitor_id,event_id,url,title,updated_at) VALUES(?,?,?,?,?)',
+      )
+      .run(visitor, id, 'https://example.com/' + i, 'Transcript ' + i, i);
   }
   const first = (await call('/v1/events/' + id + '/community')).data;
   assert.equal(first.addresses.length, 20);
   assert.equal(first.nextAddresses, 20);
   assert.equal(first.ratings.length, 20);
   assert.equal(first.nextRatings, 20);
+  assert.equal(first.transcripts.length, 20);
+  assert.equal(first.nextTranscripts, 20);
+  const moreTranscripts = (await call('/v1/events/' + id + '/community?kind=transcripts&offset=20'))
+    .data;
+  assert.equal(moreTranscripts.transcripts.length, 3);
+  assert.equal(moreTranscripts.nextTranscripts, null);
+  assert.deepEqual(moreTranscripts.addresses, []);
+  assert.deepEqual(moreTranscripts.ratings, []);
+  assert.equal(
+    new Set([...first.transcripts, ...moreTranscripts.transcripts].map((r) => r.url)).size,
+    23,
+  );
   const next = (await call('/v1/events/' + id + '/community?kind=addresses&offset=20')).data;
   assert.equal(next.addresses.length, 3);
   assert.equal(next.nextAddresses, null);
   assert.equal(next.ratings.length, 0);
+  assert.equal(next.transcripts.length, 0);
   assert.equal(new Set([...first.addresses, ...next.addresses].map((r) => r.nickname)).size, 23);
   assert.ok(!JSON.stringify(first).includes('token_hash'));
   assert.ok(!JSON.stringify(first).includes('visitor_id'));
@@ -294,4 +312,148 @@ test('public address index contains only current counts and updates after the la
   } finally {
     DB.sql.close();
   }
+});
+
+test('transcript links update without duplicates, expose only public fields and stay scoped to their owner', async () => {
+  const { call, session } = fixture(),
+    a = await session(),
+    b = await session();
+  const save = (token, url, title = '') =>
+    call('/v1/transcripts/' + id, {
+      method: 'PUT',
+      token,
+      data: { url, title },
+    });
+  assert.equal((await save(undefined, 'https://example.com/recording')).status, 401);
+  assert.equal((await save(a, 'https://example.com/first')).status, 200);
+  assert.equal(
+    (await save(a, 'https://example.com/updated?view=full#transcript', '<b>Discussion</b>')).status,
+    200,
+  );
+  assert.equal((await save(b, 'https://example.org/other')).status, 200);
+  await call('/v1/me', { method: 'PATCH', token: a, data: { nickname: 'Shared nickname' } });
+  const result = (await call('/v1/events/' + id + '/community')).data;
+  assert.equal(result.transcriptCount, 2);
+  assert.equal(result.mine, null);
+  const own = result.transcripts.find((row) => row.nickname === 'Shared nickname');
+  assert.deepEqual(Object.keys(own).sort(), ['nickname', 'title', 'updatedAt', 'url']);
+  assert.equal(own.url, 'https://example.com/updated?view=full#transcript');
+  assert.equal(own.title, '<b>Discussion</b>');
+  assert.equal(
+    (await call('/v1/events/' + id + '/community', { token: a })).data.mine.transcript.url,
+    own.url,
+  );
+  assert.equal((await call('/v1/summary?ids=' + id)).data.events[id].transcriptCount, 2);
+  await call('/v1/transcripts/' + id, { method: 'DELETE', token: b });
+  await call('/v1/transcripts/' + id, { method: 'DELETE', token: b });
+  assert.equal((await call('/v1/events/' + id + '/community')).data.transcriptCount, 1);
+  await call('/v1/transcripts/' + id, { method: 'DELETE', token: a });
+  assert.equal(
+    (await call('/v1/events/' + id + '/community', { token: a })).data.mine.transcript,
+    null,
+  );
+  assert.equal((await call('/v1/summary?ids=' + id)).data.events[id].transcriptCount, 0);
+});
+
+test('transcript URLs and titles reject unsafe or oversized input without requiring attendance', async () => {
+  const { call, session } = fixture(),
+    token = await session();
+  const save = (data) => call('/v1/transcripts/' + future, { method: 'PUT', token, data });
+  for (const url of [
+    undefined,
+    null,
+    1,
+    '',
+    'javascript:alert(1)',
+    'data:text/html,test',
+    'file:///tmp/test',
+    '/relative',
+    '//example.com',
+    'https:example.com',
+    'https://user:password@example.com',
+    'https://example.com/a b',
+    'https://example.com/a\nb',
+    'https://example.com/a\\b',
+    'https://example.com/\u0000',
+    'https://example.com/\u202E',
+    'https://example.com/' + 'x'.repeat(2000),
+  ])
+    assert.equal((await save({ url })).status, 400, String(url));
+  for (const data of [
+    null,
+    [],
+    { url: 'https://example.com', title: 10 },
+    { url: 'https://example.com', title: 'x'.repeat(121) },
+    { url: 'https://example.com', title: 'invalid\u0000title' },
+  ])
+    assert.equal((await save(data)).status, 400);
+  assert.equal((await save({ url: 'http://example.com' })).status, 200);
+  assert.equal(
+    (await save({ url: ' https://example.com/会议?key=public#text ', title: 'e\u0301\nnotes' }))
+      .status,
+    200,
+  );
+  const result = (await call('/v1/events/' + future + '/community', { token })).data;
+  assert.equal(result.canRate, false);
+  assert.equal(result.mine.transcript.title, 'é notes');
+  assert.equal(
+    result.mine.transcript.url,
+    'https://example.com/%E4%BC%9A%E8%AE%AE?key=public#text',
+  );
+  assert.equal((await call('/v1/me', { token })).data.wishes.length, 0);
+});
+
+test('removed events cannot receive new transcript links but owners can withdraw existing ones', async () => {
+  const { call, session, DB } = fixture(),
+    token = await session();
+  const removed = '00000000-0000-0000-0000-000000000000';
+  assert.equal(
+    (
+      await call('/v1/transcripts/' + removed, {
+        method: 'PUT',
+        token,
+        data: { url: 'https://example.com' },
+      })
+    ).status,
+    404,
+  );
+  const visitor = DB.sql.prepare('SELECT id FROM visitors').get().id;
+  DB.sql
+    .prepare(
+      'INSERT INTO transcript_links(visitor_id,event_id,url,title,updated_at) VALUES(?,?,?,?,?)',
+    )
+    .run(visitor, removed, 'https://example.com/', '', 1);
+  assert.equal((await call('/v1/transcripts/' + removed, { method: 'DELETE', token })).status, 200);
+  assert.equal(DB.sql.prepare('SELECT COUNT(*) AS n FROM transcript_links').get().n, 0);
+});
+
+test('transcript storage migration is repeatable and preserves existing community records', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { DB, call, session } = fixture(),
+    token = await session();
+  await call('/v1/addresses/' + id, { method: 'PUT', token, data: address });
+  await call('/v1/ratings/' + id, { method: 'PUT', token, data: { score: 4, attended: true } });
+  // Only this in-memory test database emulates an installation before the new table existed.
+  DB.sql.exec('DROP TABLE transcript_links');
+  const before = ['visitors', 'address_tips', 'ratings'].map((table) =>
+    DB.sql.prepare(`SELECT * FROM ${table}`).all(),
+  );
+  const migration = readFileSync(
+    new URL('../backend/migrations/0001_transcript_links.sql', import.meta.url),
+    'utf8',
+  );
+  DB.sql.exec(migration);
+  await call('/v1/transcripts/' + id, {
+    method: 'PUT',
+    token,
+    data: { url: 'https://example.com/transcript' },
+  });
+  DB.sql.exec(migration);
+  assert.deepEqual(
+    ['visitors', 'address_tips', 'ratings'].map((table) =>
+      DB.sql.prepare(`SELECT * FROM ${table}`).all(),
+    ),
+    before,
+  );
+  assert.equal((await call('/v1/events/' + id + '/community')).data.transcriptCount, 1);
 });

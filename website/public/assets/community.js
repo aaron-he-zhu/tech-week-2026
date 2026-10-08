@@ -88,13 +88,14 @@
     window.addEventListener('online', refreshHomeStats);
   }
   C.markup = (e) =>
-    `<div class="community-row"><button type="button" class="community-entry" data-community="addresses" data-community-event="${esc(e.id)}"><span class="community-label">⌖ 地址爆料</span><span data-address-summary>查看 / 提供具体地址 →</span></button><button type="button" class="community-entry" data-community="ratings" data-community-event="${esc(e.id)}"><span class="community-label">☆ 去过并评分</span><span data-rating-summary>查看 / 评 1–5 分 →</span></button></div>`;
+    `<div class="community-row"><button type="button" class="community-entry" data-community="addresses" data-community-event="${esc(e.id)}"><span class="community-label">⌖ 地址爆料</span><span data-address-summary>查看 / 提供具体地址 →</span></button><button type="button" class="community-entry" data-community="ratings" data-community-event="${esc(e.id)}"><span class="community-label">☆ 去过并评分</span><span data-rating-summary>查看 / 评 1–5 分 →</span></button><button type="button" class="community-entry" data-community="transcripts" data-community-event="${esc(e.id)}"><span class="community-label">↗ 录音转写</span><span data-transcript-summary>查看 / 分享转写链接 →</span></button></div>`;
   C.paintSummary = (summary) => {
     document.querySelectorAll('[data-community-event]').forEach((button) => {
       const row = summary[button.dataset.communityEvent];
       if (!row) return;
       const address = button.querySelector('[data-address-summary]'),
-        rating = button.querySelector('[data-rating-summary]');
+        rating = button.querySelector('[data-rating-summary]'),
+        transcript = button.querySelector('[data-transcript-summary]');
       if (address)
         address.textContent = row.addressCount
           ? window.TWLocale.en
@@ -110,6 +111,13 @@
                 (row.ratingCount === 1 ? ' attendee rated →' : ' attendees rated →')
               : row.ratingCount + ' 人去过 →')
           : '暂无评分 · 参加后评分 →';
+      if (transcript)
+        transcript.textContent = row.transcriptCount
+          ? window.TWLocale.en
+            ? row.transcriptCount +
+              (row.transcriptCount === 1 ? ' shared link →' : ' shared links →')
+            : row.transcriptCount + ' 条转写链接 →'
+          : '分享这场活动的转写 →';
     });
   };
   if (!events.length) return;
@@ -118,7 +126,7 @@
   dialog.setAttribute('aria-labelledby', 'community-heading');
   dialog.innerHTML = `<div class="wish-dialog-head"><h2 id="community-heading">活动交流</h2><button type="button" data-community-close aria-label="关闭活动交流">×</button></div>
   <p id="community-event-name" class="community-event-name"></p>
-  <div class="community-tabs" role="group" aria-label="活动交流模块"><button type="button" data-community-tab="addresses" aria-pressed="true">地址爆料</button><button type="button" data-community-tab="ratings" aria-pressed="false">去过并评分</button></div>
+  <div class="community-tabs" role="group" aria-label="活动交流模块"><button type="button" data-community-tab="addresses" aria-pressed="true">地址爆料</button><button type="button" data-community-tab="ratings" aria-pressed="false">去过并评分</button><button type="button" data-community-tab="transcripts" aria-pressed="false">录音转写</button></div>
   <p id="community-feedback" class="community-feedback" role="status" hidden></p><button type="button" id="community-retry" class="wish-action" hidden>重新加载</button>
   <section id="community-addresses" aria-label="地址爆料"><p class="site-caption">访客提供的具体地址，未经主办方核实。若地址不同，请以主办方最新通知为准。</p>
    <div id="address-list" class="contribution-list"></div><button type="button" id="address-more" class="wish-action" hidden>更多地址爆料</button>
@@ -135,6 +143,15 @@
     <fieldset class="rating-options"><legend>这次体验你打几分？</legend>${[1, 2, 3, 4, 5].map((n) => `<label><input type="radio" name="community-score" value="${n}" required><span>${n}<small>分</small></span></label>`).join('')}</fieldset>
     <p class="site-caption">1 分很不满意 · 3 分一般 · 5 分很满意</p><div class="contribution-actions"><button type="submit" class="wish-action primary-action">提交评分</button></div>
    </fieldset><button type="button" id="rating-remove" class="wish-action" hidden>撤回我的评分</button></form>
+  </section>
+  <section id="community-transcripts" aria-label="录音转写" hidden><p class="site-caption">大家分享的录音转写链接，点击后前往原网站阅读。</p>
+   <div id="transcript-list" class="contribution-list"></div><button type="button" id="transcript-more" class="wish-action" hidden>更多转写链接</button>
+   <form id="transcript-form" class="contribution-form"><h3>分享录音转写</h3><p class="community-identity"></p><fieldset>
+    <label for="transcript-url">转写链接</label><input id="transcript-url" type="url" inputmode="url" required maxlength="2000" placeholder="https://…" autocomplete="off" aria-describedby="transcript-visibility">
+    <label for="transcript-title">链接标题 <span>选填</span></label><input id="transcript-title" maxlength="240" placeholder="例如：现场讨论完整转写" autocomplete="off">
+    <p id="transcript-visibility" class="site-caption">链接、标题和昵称将公开显示。请确认内容可以分享，并设置好原链接的访问权限。</p><p class="site-caption">每人每场可分享一条链接，支持修改或撤回。标题最多 120 个字。</p>
+    <div class="contribution-actions"><button type="submit" class="wish-action primary-action">发布转写链接</button></div>
+   </fieldset><button type="button" id="transcript-remove" class="wish-action" hidden>撤回我的链接</button></form>
   </section><p id="community-readonly" class="site-caption" hidden>这是只读分享页面。<a href="${window.TWLocale.path('/wishlist/')}">返回我的 Wishlist</a> 后可用自己的身份参与。</p>`;
   document.body.append(dialog);
   const $ = (s) => dialog.querySelector(s);
@@ -162,6 +179,7 @@
   function selectKind(value) {
     $('#community-addresses').hidden = value !== 'addresses';
     $('#community-ratings').hidden = value !== 'ratings';
+    $('#community-transcripts').hidden = value !== 'transcripts';
     dialog
       .querySelectorAll('[data-community-tab]')
       .forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.communityTab === value)));
@@ -227,6 +245,38 @@
       list.append(article);
     }
   }
+  function drawTranscripts(rows, append = false) {
+    const list = $('#transcript-list');
+    if (!append) list.replaceChildren();
+    if (!rows.length && !append) {
+      list.textContent = '还没有转写链接，欢迎分享这场活动的记录。';
+      return;
+    }
+    for (const row of rows) {
+      let url;
+      try {
+        url = new URL(row.url);
+      } catch {
+        continue;
+      }
+      if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) continue;
+      const article = document.createElement('article'),
+        meta = document.createElement('p'),
+        link = document.createElement('a'),
+        source = document.createElement('p');
+      article.className = 'contribution transcript-contribution';
+      meta.className = 'contribution-meta';
+      meta.textContent = nameTime(row);
+      link.textContent = (row.title || '打开录音转写') + ' ↗';
+      link.href = url.href;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer ugc nofollow';
+      source.className = 'contribution-note';
+      source.textContent = url.hostname;
+      article.append(meta, link, source);
+      list.append(article);
+    }
+  }
   function moreButton(selector, offset) {
     const b = $(selector);
     b.hidden = offset === null;
@@ -236,15 +286,17 @@
   function setFormsDisabled(disabled) {
     $('#address-form > fieldset').disabled = disabled;
     $('#rating-form > fieldset').disabled = disabled;
+    $('#transcript-form > fieldset').disabled = disabled;
     $('#address-remove').disabled = disabled;
     $('#rating-remove').disabled = disabled;
+    $('#transcript-remove').disabled = disabled;
   }
   async function load() {
     const active = current,
       requestVersion = ++version;
     setFormsDisabled(true);
     $('#community-retry').hidden = true;
-    feedback('正在加载地址和评分…');
+    feedback('正在加载活动分享…');
     try {
       await W.ready;
       const result = await W.request(
@@ -254,8 +306,10 @@
       if (version !== requestVersion || current !== active || !dialog.open) return;
       drawAddresses(result.addresses);
       drawRatings(result.ratings);
+      drawTranscripts(result.transcripts);
       moreButton('#address-more', result.nextAddresses);
       moreButton('#rating-more', result.nextRatings);
+      moreButton('#transcript-more', result.nextTranscripts);
       $('#rating-summary').textContent = result.ratingCount
         ? Number(result.ratingAverage).toFixed(1) +
           ' / 5 · ' +
@@ -266,12 +320,21 @@
         : '暂无评分';
       $('#address-form').hidden = W.readOnly;
       $('#rating-form').hidden = W.readOnly;
+      $('#transcript-form').hidden = W.readOnly;
       $('#community-readonly').hidden = !W.readOnly;
       identity();
       $('#address-form').reset();
       $('#rating-form').reset();
+      $('#transcript-form').reset();
       const tip = result.mine?.address,
-        rating = result.mine?.rating;
+        rating = result.mine?.rating,
+        transcript = result.mine?.transcript;
+      $('#transcript-url').value = transcript?.url || '';
+      $('#transcript-title').value = transcript?.title || '';
+      $('#transcript-remove').hidden = !transcript;
+      $('#transcript-form button[type=submit]').textContent = transcript
+        ? '更新我的链接'
+        : '发布转写链接';
       $('#tip-address').value = tip?.address || '';
       $('#tip-note').value = tip?.note || '';
       $('#address-remove').hidden = !tip;
@@ -291,6 +354,7 @@
         : '活动尚未开始，参加后再来评分。';
       if (active.removed) {
         $('#address-form > fieldset').disabled = true;
+        $('#transcript-form > fieldset').disabled = true;
         $('#address-remove').disabled = false;
       }
       feedback('');
@@ -311,13 +375,17 @@
     $('#community-event-name').textContent = event.name;
     $('#address-list').replaceChildren();
     $('#rating-list').replaceChildren();
+    $('#transcript-list').replaceChildren();
     $('#rating-summary').textContent = '';
     $('#address-form').reset();
     $('#rating-form').reset();
+    $('#transcript-form').reset();
     $('#address-form').hidden = true;
     $('#rating-form').hidden = true;
+    $('#transcript-form').hidden = true;
     $('#address-more').hidden = true;
     $('#rating-more').hidden = true;
+    $('#transcript-more').hidden = true;
     $('#community-readonly').hidden = true;
     if (!dialog.open) dialog.showModal();
     dialog.scrollTop = 0;
@@ -342,7 +410,9 @@
               ? '已撤回'
               : target === 'addresses'
                 ? '地址已发布，可随时修改或撤回。'
-                : '评分已保存，可随时修改或撤回。',
+                : target === 'transcripts'
+                  ? '转写链接已发布，可随时修改或撤回。'
+                  : '评分已保存，可随时修改或撤回。',
           );
       }
     } catch (error) {
@@ -365,12 +435,21 @@
       attended: $('#rating-attended').checked,
     });
   });
+  $('#transcript-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    mutate('transcripts', 'PUT', {
+      url: $('#transcript-url').value,
+      title: $('#transcript-title').value,
+    });
+  });
+  $('#transcript-remove').addEventListener('click', () => mutate('transcripts', 'DELETE'));
   $('#address-remove').addEventListener('click', () => mutate('addresses', 'DELETE'));
   $('#rating-remove').addEventListener('click', () => mutate('ratings', 'DELETE'));
   $('#community-retry').addEventListener('click', load);
   for (const [selector, value, draw, next] of [
     ['#address-more', 'addresses', drawAddresses, 'nextAddresses'],
     ['#rating-more', 'ratings', drawRatings, 'nextRatings'],
+    ['#transcript-more', 'transcripts', drawTranscripts, 'nextTranscripts'],
   ])
     $(selector).addEventListener('click', async () => {
       const active = current,

@@ -50,12 +50,12 @@ When moving an existing site to a new source repository, preserve Worker names, 
 
 ## Normal releases
 
-Push or merge to `main`. The workflow scans Git history, installs pinned dependencies, checks formatting and lint, verifies reproducible builds and runs tests. It then prepares configuration, deploys the API, deploys the site and verifies both language homepages plus public API responses.
+Push or merge to `main`. The workflow scans Git history, installs pinned dependencies, checks formatting and lint, verifies reproducible builds and runs tests. It then prepares configuration, applies the idempotent transcript-link table migration, deploys the API, deploys the site and verifies both language homepages plus public API responses.
 
 Pull requests, including fork PRs, never receive deployment credentials or run deployment steps. A green run with skipped deploy steps means validation passed, not that anything was published. Runs on the same branch are serialized to avoid interleaved API/site releases.
 
-No migration, database import, record deletion or test contribution runs automatically. Existing visitor data stays in D1 across deployments. When a schema change is needed, review and apply it separately before releasing dependent code.
+The workflow runs only `backend/migrations/0001_transcript_links.sql` before API deployment. It adds the transcript-link table and index with `IF NOT EXISTS`, is safe to repeat, and does not modify existing visitor records. The deployment token needs D1 Edit permission as well as Workers deployment access. Fresh installations still initialize the full schema separately. Other schema changes require their own review; database imports, record deletions and test contributions never run automatically.
 
 For rollback, deploy a previously verified commit with the same configuration, or use Cloudflare's deployment history. Keep code and API compatibility in mind when rolling back one Worker independently. Never reset or replace the production database as a code rollback shortcut.
 
-中文：fork 后默认只连接本地服务。线上部署需要自己的 Cloudflare 账号、D1 和可选 Google 客户端；普通部署只更新两个 Worker，不自动迁移或清空数据库。只有开启部署的 `main` 流水线会发布，PR 只验证。
+中文：fork 后默认只连接本地服务。线上部署需要自己的 Cloudflare 账号、D1 和可选 Google 客户端；部署在发布 API 前只执行可重复的转写链接建表迁移，不修改已有用户记录；不会导入、清空数据库或写入测试数据。只有开启部署的 `main` 流水线会发布，PR 只验证。

@@ -342,7 +342,9 @@
         W.nickname = result.nickname;
         input.value = W.nickname;
         announce(
-          W.nickname ? '昵称已保存，会公开显示在收藏、地址爆料和评分中。' : '已改为匿名访客',
+          W.nickname
+            ? '昵称已保存，会公开显示在收藏、地址爆料、评分和转写链接中。'
+            : '已改为匿名访客',
         );
         W.mount();
       } catch (error) {

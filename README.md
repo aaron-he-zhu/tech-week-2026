@@ -4,7 +4,7 @@ English (default) · [简体中文](README.zh-CN.md)
 
 A mobile-first, independent bilingual guide to Tech Week: [English website](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/) · [中文网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/zh/).
 
-The live guide covers **SF and LA official events across 30 topics**; current counts and the latest refresh time appear on the [website](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/). This source repository builds a clearly labeled **30-event fictional demo**, with 37 pages per language. Topics sort by event count; events sort chronologically. List and calendar views share city, date, search and address-tip filters. Visitors can keep an anonymous Wishlist, use a public nickname, share address tips and rate attended events. Optional Google sign-in restores records across devices.
+The live guide covers **SF and LA official events across 30 topics**; current counts and the latest refresh time appear on the [website](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/). This source repository builds a clearly labeled **30-event fictional demo**, with 37 pages per language. Topics sort by event count; events sort chronologically. List and calendar views share city, date, search and address-tip filters. Visitors can keep an anonymous Wishlist, use a public nickname, share address tips and recording/transcript links, and rate attended events. Optional Google sign-in restores records across devices.
 
 ## Run locally
 
@@ -40,7 +40,7 @@ Default builds use the fictional examples in `examples/demo/`. Live content is k
 
 `npm run verify` checks formatting with Prettier/Ruff, JavaScript and Python lint, byte-for-byte reproducibility across clean builds, calendar coverage, bilingual data parity, and the automated test suites. `npm run format` applies the shared style. Builds render to a temporary directory before replacing `dist/`, so a rendering failure preserves the previous website artifact.
 
-GitHub Actions also scans Git history for credentials with a pinned Gitleaks binary and verified checksum. Pull requests run checks only. Enabled pushes to `main` deploy the API, then the website, followed by read-only live verification. Deployments require explicit configuration and never run database migrations or write test contributions to production.
+GitHub Actions also scans Git history for credentials with a pinned Gitleaks binary and verified checksum. Pull requests run checks only. Enabled pushes to `main` deploy the API, then the website, followed by read-only live verification. Deployments require explicit configuration and apply only the additive, repeatable transcript-link migration before API deployment, and never write test contributions to production.
 
 ## Languages
 

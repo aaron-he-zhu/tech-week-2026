@@ -259,7 +259,7 @@ async function route(request, env, ctx) {
       .run();
     return { signedOut: true };
   }
-  const contribution = path.match(/^\/v1\/(addresses|ratings)\/([a-f\d-]+)$/);
+  const contribution = path.match(/^\/v1\/(addresses|ratings|transcripts)\/([a-f\d-]+)$/);
   if (contribution && ['PUT', 'DELETE'].includes(method)) {
     const [, kind, id] = contribution;
     if (!UUID.test(id)) fail(400, '活动编号不正确');

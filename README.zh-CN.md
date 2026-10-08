@@ -4,7 +4,7 @@
 
 手机阅读优先的独立双语活动指南：[英文网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/) · [中文网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/zh/)。
 
-线上指南覆盖 **SF、LA 官方活动与 30 个专题**；当前活动数与最近核对时间见[线上网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/zh/)。公开源码默认使用 **30 场虚构演示活动**，英文、中文各 37 页。专题按场次数量排序，活动按时间排序。支持列表、日历视图及只看有地址爆料的活动。支持免注册 Wishlist、公开昵称、地址爆料、去过并打分，以及可选的 Google 登录和跨设备恢复。
+线上指南覆盖 **SF、LA 官方活动与 30 个专题**；当前活动数与最近核对时间见[线上网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/zh/)。公开源码默认使用 **30 场虚构演示活动**，英文、中文各 37 页。专题按场次数量排序，活动按时间排序。支持列表、日历视图及只看有地址爆料的活动。支持免注册 Wishlist、公开昵称、地址爆料、录音转写链接分享、去过并打分，以及可选的 Google 登录和跨设备恢复。
 
 ## 本地运行
 
@@ -40,7 +40,7 @@ npm run preview:wishlist
 
 `npm run verify` 包含 Prettier/Ruff 格式检查、JavaScript/Python 静态检查、两次干净构建的逐字节一致性校验、日历覆盖与双语数据校验，以及自动化测试。`npm run format` 应用统一格式。构建先写临时目录，渲染失败时保留上一份 `dist/`。
 
-GitHub Actions 还使用固定版本、校验过下载摘要的 Gitleaks 扫描 Git 历史。PR 只检查；开启部署的 `main` 推送依次发布 API 和网站，再进行只读验证。部署需要显式配置，不自动执行数据库迁移，也不向线上写入测试爆料或评分。
+GitHub Actions 还使用固定版本、校验过下载摘要的 Gitleaks 扫描 Git 历史。PR 只检查；开启部署的 `main` 推送依次发布 API 和网站，再进行只读验证。部署需要显式配置，在发布 API 前执行可重复的转写链接建表迁移，不修改已有用户记录，也不向线上写入测试内容。
 
 ## 双语维护
 

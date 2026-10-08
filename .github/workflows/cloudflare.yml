@@ -107,6 +107,12 @@ jobs:
           D1_DATABASE_ID: ${{ vars.D1_DATABASE_ID }}
           GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
         run: npm run prepare:deploy
+      - name: Add transcript link storage
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          WRANGLER_SEND_METRICS: "false"
+        run: npx wrangler d1 execute DB --remote --config .local/deploy/api.wrangler.json --file backend/migrations/0001_transcript_links.sql --yes
       - name: Deploy interaction API
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

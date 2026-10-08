@@ -1,6 +1,6 @@
 <div class="events-layout">
   <section aria-label="相关活动"
-    >{{ city_tabs_html }}<div class="filter-search">{{ search_html }}</div>
+    ><div class="filter-search">{{ search_html }}</div>
     <div class="filters"
       >{{ purpose_filter_html }}<div class="filter">
         <label for="filter-date">日期 · PDT</label>
@@ -46,7 +46,7 @@
     <div id="event-list">{{ event_cards_html }}</div>
     <div class="empty" id="event-empty" hidden>
       <h3>这个组合下暂时没有活动</h3>
-      <p>换一个日期或城市，或清除筛选查看本页全部活动。</p>
+      <p>换一个日期，或清除筛选查看本页全部活动。</p>
       <button class="reset" data-reset>清除筛选</button>
     </div>
     <button id="load-more" class="load-more" {{ load_more_hidden }}>查看更多活动</button>

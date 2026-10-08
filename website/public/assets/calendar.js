@@ -3,7 +3,6 @@
   function matches(event, state, addressCounts, ignoreDate = false) {
     const query = state.q.trim().toLowerCase();
     return (
-      (state.city === 'all' || event.city === state.city) &&
       (ignoreDate ||
         !state.date ||
         (event.date <= state.date && (event.endDate || event.date) >= state.date)) &&

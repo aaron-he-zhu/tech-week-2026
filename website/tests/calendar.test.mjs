@@ -22,13 +22,13 @@ const event = {
   place: 'Demo',
   themes: ['AI'],
 };
-const state = { city: 'all', date: '', format: '', purpose: '', status: '', q: '', address: false };
-test('address filter composes with city, search and inclusive multi-day dates', () => {
-  const filter = { ...state, address: true, date: '2026-10-06', q: 'workshop', city: 'sf' };
+const state = { date: '', format: '', purpose: '', status: '', q: '', address: false };
+test('address filter composes with search and inclusive multi-day dates across both cities', () => {
+  const filter = { ...state, address: true, date: '2026-10-06', q: 'workshop' };
   assert.equal(matches(event, filter, { synthetic: 1 }), true);
   assert.equal(matches(event, filter, {}), false);
   assert.equal(matches(event, filter, null), false);
-  assert.equal(matches(event, { ...filter, city: 'la' }, { synthetic: 1 }), false);
+  assert.equal(matches({ ...event, city: 'la' }, filter, { synthetic: 1 }), true);
   assert.equal(matches(event, { ...filter, date: '2026-10-08' }, { synthetic: 1 }), false);
   assert.equal(matches(event, { ...filter, date: '2026-10-08' }, { synthetic: 1 }, true), true);
 });
@@ -60,14 +60,14 @@ test('calendar expands dates inclusively and sorts ongoing events before timed s
   });
 });
 
-test('official featured filter intersects address, date and city filters and calendar counts', () => {
+test('official featured filter intersects address and date filters across both cities', () => {
   const featured = { ...event, featured: true };
-  const filter = { ...state, featured: true, address: true, city: 'sf', date: '2026-10-06' };
+  const filter = { ...state, featured: true, address: true, date: '2026-10-06' };
   assert.equal(matches(featured, filter, { synthetic: 1 }), true);
   assert.equal(matches({ ...featured, featured: false }, filter, { synthetic: 1 }), false);
   assert.equal(matches(event, filter, { synthetic: 1 }), false);
   assert.equal(matches(featured, filter, {}), false);
-  assert.equal(matches(featured, { ...filter, city: 'la' }, { synthetic: 1 }), false);
+  assert.equal(matches({ ...featured, city: 'la' }, filter, { synthetic: 1 }), true);
   const candidates = [featured, { ...event, id: 'ordinary' }].filter((row) =>
     matches(row, { ...state, featured: true }, null, true),
   );

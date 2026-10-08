@@ -214,9 +214,6 @@ def main():
                 ),
             )
 
-        def city_tabs():
-            return '<div class="segments" role="group" aria-label="选择城市"><button data-city="all" aria-pressed="true">全部城市</button><button data-city="sf" aria-pressed="false">SF</button><button data-city="la" aria-pressed="false">LA</button></div>'
-
         def search(id, placeholder):
             return f'<div class="search-wrap"><span aria-hidden="true">⌕</span><label for="{id}" class="sr-only">{placeholder}</label><input type="search" id="{id}" class="search" placeholder="{placeholder}" autocomplete="off"></div>'
 
@@ -245,7 +242,6 @@ def main():
             sf_count=format(SF, ","),
             la_count=format(LA, ","),
             calendar_weeks=calendar_weeks(EVENTS),
-            city_tabs_html=Markup(city_tabs()),
             search_html=Markup(search("topic-search", "搜索专题，如 视频、Harness")),
             category_tabs_html=Markup(
                 "".join(
@@ -329,7 +325,6 @@ def main():
             )
             return render_template(
                 "listing.html",
-                city_tabs_html=Markup(city_tabs()),
                 search_html=Markup(search("event-search", "搜索活动、主办方、地点")),
                 purpose_filter_html=Markup(purpose_filter),
                 date_options_html=Markup(options(dates, "所有日期")),
@@ -390,7 +385,7 @@ def main():
             normalize(e)
             for e in sorted(EVENTS, key=lambda x: (x["date"], x["startTime"], x["name"]))
         ]
-        body = f"""<div class="crumb"><a href="/">首页</a><span>/</span><span>全部活动</span></div><section class="topic-hero"><div><div class="eyebrow">THE FULL CALENDAR</div><h1>全部活动</h1><p class="intro">完整浏览 SF 与 LA 的 {TOTAL:,} 条官方日历记录。可按城市、日期、活动侧重、形式和报名状态筛选。</p></div><div class="reading-box"><strong>SF 10/5–11 · LA 10/12–18</strong><p class="site-caption">所有时间均为 PDT（UTC−7）。先确认申请结果，再安排现场行程。</p></div></section>{listing(all_events)}"""
+        body = f"""<div class="crumb"><a href="/">首页</a><span>/</span><span>全部活动</span></div><section class="topic-hero"><div><div class="eyebrow">THE FULL CALENDAR</div><h1>全部活动</h1><p class="intro">完整浏览 SF 与 LA 的 {TOTAL:,} 条官方日历记录。可按日期、活动侧重、形式和报名状态筛选。</p></div><div class="reading-box"><strong>SF 10/5–11 · LA 10/12–18</strong><p class="site-caption">所有时间均为 PDT（UTC−7）。先确认申请结果，再安排现场行程。</p></div></section>{listing(all_events)}"""
         (OUT / "events").mkdir(exist_ok=True)
         (OUT / "events/index.html").write_text(
             layout(

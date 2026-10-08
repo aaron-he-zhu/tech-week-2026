@@ -4,7 +4,7 @@ English (default) · [简体中文](README.zh-CN.md)
 
 A mobile-first, independent bilingual guide to Tech Week: [English website](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/) · [中文网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/zh/).
 
-The live guide covers **SF and LA official events across 30 topics**; current counts and the latest refresh time appear on the [website](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/). This source repository builds a clearly labeled **30-event fictional demo**, with 37 pages per language. Topics sort by event count; events sort chronologically. Calendar pages support city, date, search, official-pick and address-tip filters. Visitors can keep an anonymous Wishlist, use a public nickname, share address tips and recording/transcript links, and rate attended events. Optional Google sign-in restores records across devices.
+The live guide covers **SF and LA official events across 30 topics**; current counts and the latest refresh time appear on the [website](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/). This source repository builds a clearly labeled **30-event fictional demo**, with 37 pages per language. Topics sort by event count; events sort chronologically. Calendar pages show both cities and support date, search, official-pick and address-tip filters. Visitors can keep an anonymous Wishlist, use a public nickname, share address tips and recording/transcript links, and rate attended events. Optional Google sign-in restores records across devices.
 
 ## Run locally
 

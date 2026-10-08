@@ -7,9 +7,6 @@ const escapeText = (value) =>
     (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
   );
 const params = new URLSearchParams(location.search);
-function cityButtons(city) {
-  $$('[data-city]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.city === city)));
-}
 const pageData = $('#page-data');
 if (pageData) {
   const data = JSON.parse(pageData.textContent);
@@ -23,18 +20,16 @@ if (pageData) {
     $$('[data-home-date]').forEach((link) => {
       if (link.dataset.homeDate === today) link.setAttribute('aria-current', 'date');
     });
-    let city = ['sf', 'la'].includes(params.get('city')) ? params.get('city') : 'all',
-      group = data.topics.some((t) => t.group === params.get('group'))
-        ? params.get('group')
-        : 'all';
+    let group = data.topics.some((t) => t.group === params.get('group'))
+      ? params.get('group')
+      : 'all';
     $('#topic-search').value = params.get('q') || '';
     const apply = () => {
       const q = $('#topic-search').value.toLowerCase().trim();
       let shown = 0;
-      const count = (t) => (city === 'all' ? t.total : t[city]);
       const cards = new Map($$('.topic-card').map((card) => [card.dataset.slug, card]));
       [...data.topics]
-        .sort((a, b) => count(b) - count(a))
+        .sort((a, b) => b.total - a.total)
         .forEach((item) => {
           const card = cards.get(item.slug);
           $('.topic-grid').append(card);
@@ -46,29 +41,18 @@ if (pageData) {
                 .includes(q));
           card.hidden = !ok;
           if (ok) shown++;
-          $('.count', card).textContent = count(item);
-          card.href =
-            window.TWLocale.path('/topics/' + item.slug + '/') +
-            (city === 'all' ? '' : '?city=' + city);
+          $('.count', card).textContent = item.total;
         });
       $$('[data-group]').forEach((b) =>
         b.setAttribute('aria-pressed', String(b.dataset.group === group)),
       );
       $('#topic-result').textContent = shown + ' 个专题';
       $('#topic-empty').hidden = shown > 0;
-      cityButtons(city);
       const p = new URLSearchParams();
-      if (city !== 'all') p.set('city', city);
       if (group !== 'all') p.set('group', group);
       if (q) p.set('q', $('#topic-search').value);
       history.replaceState(null, '', location.pathname + (p.size ? '?' + p : '') + location.hash);
     };
-    $$('[data-city]').forEach((b) =>
-      b.addEventListener('click', () => {
-        city = b.dataset.city;
-        apply();
-      }),
-    );
     $$('[data-group]').forEach((b) =>
       b.addEventListener('click', () => {
         group = b.dataset.group;
@@ -82,7 +66,6 @@ if (pageData) {
     const valid = (key, values, fallback) =>
       values.includes(params.get(key)) ? params.get(key) : fallback;
     const state = {
-      city: valid('city', ['sf', 'la'], 'all'),
       date: params.get('date') || '',
       format: params.get('format') || '',
       purpose: $('#filter-purpose') ? params.get('purpose') || '' : '',
@@ -187,13 +170,12 @@ if (pageData) {
       if (!preserveLimit) state.limit = 12;
       draw();
       paintCalendar();
-      cityButtons(state.city);
       const unavailable = state.address && index().counts === null;
       $('#event-count').textContent = unavailable
         ? index().error
           ? '暂时无法读取爆料地址'
           : '正在加载爆料地址…'
-        : `${filtered.length.toLocaleString()} 场活动${state.city === 'all' ? ' · SF + LA' : ' · ' + state.city.toUpperCase()}`;
+        : `${filtered.length.toLocaleString()} 场活动 · SF + LA`;
       $('#address-filter-feedback').hidden = !state.address || (!index().loading && !index().error);
       $('#address-filter-status').textContent = index().error
         ? index().counts
@@ -214,8 +196,8 @@ if (pageData) {
           : '连接成功后会显示云端清单；加载失败时，请查看下方提示并刷新重试。';
       }
       const query = new URLSearchParams();
-      for (const key of ['city', 'date', 'format', 'purpose', 'status', 'q'])
-        if (state[key] && !(key === 'city' && state[key] === 'all')) query.set(key, state[key]);
+      for (const key of ['date', 'format', 'purpose', 'status', 'q'])
+        if (state[key]) query.set(key, state[key]);
       query.set('sort', 'time');
       if (state.address) query.set('address', '1');
       if (state.featured) query.set('featured', '1');
@@ -258,12 +240,6 @@ if (pageData) {
     document.addEventListener('visibilitychange', refreshAddresses);
     window.addEventListener('pageshow', refreshAddresses);
     window.addEventListener('online', refreshAddresses);
-    $$('[data-city]').forEach((button) =>
-      button.addEventListener('click', () => {
-        state.city = button.dataset.city;
-        selectDate('');
-      }),
-    );
     for (const key of filterKeys)
       $('#filter-' + key).addEventListener('change', (event) => {
         state[key] = event.target.value;
@@ -278,7 +254,6 @@ if (pageData) {
     $$('[data-reset]').forEach((button) =>
       button.addEventListener('click', () => {
         Object.assign(state, {
-          city: 'all',
           date: '',
           format: '',
           purpose: '',

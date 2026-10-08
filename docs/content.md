@@ -21,6 +21,8 @@ The snapshot's `detail_source` must resolve inside the content root. Required fi
 
 UI translations live in `website/src/locales/en.json`; content-specific translations are overlaid at build time. Both languages share source IDs, dates, taxonomy and counts. CSV output sanitizes spreadsheet formula prefixes in either language.
 
+When a later agenda review removes an event from a merged topic, the snapshot can name a `taxonomy_changes_source` JSON file inside the content root. Its entries identify `topic`, `id`, `action` and a nonempty `reason`. Production checks require an explicit removal record before allowing a former memory or retrieval event to leave the merged category.
+
 Public pull requests validate only the fictional dataset. The optional production job checks out the private dataset at an explicitly configured immutable revision using a read-only, repository-scoped deploy key. It does not publish that checkout or use visitor records for testing. A content refresh requires updating and reviewing that pinned revision; normal website requests and community updates do not run the build.
 
 Do not commit external snapshots to this public repository. See [source notices](../NOTICE.md) before importing data.

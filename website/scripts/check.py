@@ -200,7 +200,7 @@ print(
     "PASS: contextual exclusions, new topic inclusions, original evidence, chronological order and purpose filters."
 )
 
-# Merging preserves the union, with four shared events counted once.
+# Preserve the merged categories unless a later review explicitly removes an event.
 if not DEMO:
     original = json.loads(
         (BASE / "data/taxonomy_before_memory_merge/src/topic_membership.json").read_text(
@@ -208,10 +208,22 @@ if not DEMO:
         )
     )
     expected = set(original["agent-memory"]) | set(original["ai-search"])
+    reviewed_removals = set()
+    if audit_source := SNAPSHOT.get("taxonomy_changes_source"):
+        audit_path = (BASE / audit_source).resolve()
+        assert audit_path.is_relative_to(BASE), "Taxonomy audit must stay in the content directory"
+        audit = json.loads(audit_path.read_text(encoding="utf-8"))
+        reviewed_removals = {
+            change["id"]
+            for change in audit
+            if change["topic"] == "agent-memory"
+            and change["action"] == "remove"
+            and change.get("reason", "").strip()
+        }
     knowledge = Page((out / "topics/agent-memory/index.html").read_text(encoding="utf-8")).data[
         "events"
     ]
-    assert expected & ids <= {e["id"] for e in knowledge}
+    assert (expected & ids) - reviewed_removals <= {e["id"] for e in knowledge}
 
 knowledge = Page((out / "topics/agent-memory/index.html").read_text(encoding="utf-8")).data[
     "events"

@@ -6,7 +6,7 @@ English (default) · [简体中文](README.zh-CN.md)
 
 ## Demo and live content
 
-A fresh checkout builds 30 fictional demonstration events, one per topic. A visible notice identifies demo pages. The live website uses a separate private content checkout, currently with 2,389 events (1,586 SF and 803 LA). Real snapshots, full organizer descriptions and visitor records are not distributed here. See [content format](../docs/content.md).
+A fresh checkout builds 30 fictional demonstration events, one per topic. A visible notice identifies demo pages. The live website uses a separate private content checkout for SF and LA events; current counts and the checked timestamp come from that content snapshot. Real snapshots, full organizer descriptions and visitor records are not distributed here. See [content format](../docs/content.md).
 
 Both languages share event IDs, taxonomy, dates and counts. Topics sort by event count; events sort chronologically. List and calendar views work on event, topic and Wishlist pages. Calendar date buttons show counts after the other filters are applied; multiday events appear on each covered day, using the published Pacific calendar dates.
 

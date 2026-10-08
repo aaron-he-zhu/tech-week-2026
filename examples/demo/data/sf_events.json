@@ -1,0 +1,377 @@
+[
+  {
+    "id": "d32dbeb0-dd87-57b4-861d-6fd130c346d4",
+    "name": "Demo: Ai Video",
+    "citySlug": "sf",
+    "date": "2026-10-05",
+    "startTime": "10:00",
+    "endDate": "2026-10-05",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about AI VIDEO. This is not a real event."
+  },
+  {
+    "id": "4e64005d-6692-5a79-bf7a-c79b0c38ae64",
+    "name": "Demo: Ai Content & Ads",
+    "citySlug": "sf",
+    "date": "2026-10-07",
+    "startTime": "10:00",
+    "endDate": "2026-10-07",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about AI CONTENT & ADS. This is not a real event."
+  },
+  {
+    "id": "6cbfa51d-2168-5d70-97ed-f6d4d73a8596",
+    "name": "Demo: Agent Harness",
+    "citySlug": "sf",
+    "date": "2026-10-09",
+    "startTime": "10:00",
+    "endDate": "2026-10-09",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about AGENT HARNESS. This is not a real event."
+  },
+  {
+    "id": "f687009e-7d21-5841-b37d-bfbe299212fb",
+    "name": "Demo: World Models",
+    "citySlug": "sf",
+    "date": "2026-10-11",
+    "startTime": "10:00",
+    "endDate": "2026-10-11",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about WORLD MODELS. This is not a real event."
+  },
+  {
+    "id": "70cae9c9-1b14-5252-b89f-eb2f1f147148",
+    "name": "Demo: Multi-Agent",
+    "citySlug": "sf",
+    "date": "2026-10-06",
+    "startTime": "10:00",
+    "endDate": "2026-10-06",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about MULTI-AGENT. This is not a real event."
+  },
+  {
+    "id": "524d2f12-2c14-558d-b379-d59454471384",
+    "name": "Demo: Evals & Observability",
+    "citySlug": "sf",
+    "date": "2026-10-08",
+    "startTime": "10:00",
+    "endDate": "2026-10-08",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about EVALS & OBSERVABILITY. This is not a real event."
+  },
+  {
+    "id": "886416f6-de7c-54f3-a0d4-69b7a82c6162",
+    "name": "Demo: Inference & Compute",
+    "citySlug": "sf",
+    "date": "2026-10-10",
+    "startTime": "10:00",
+    "endDate": "2026-10-10",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about INFERENCE & COMPUTE. This is not a real event."
+  },
+  {
+    "id": "b06f8bcd-7c15-5b6f-8a59-7b4b4ef76621",
+    "name": "Demo: Ai Design",
+    "citySlug": "sf",
+    "date": "2026-10-05",
+    "startTime": "10:00",
+    "endDate": "2026-10-05",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about AI DESIGN. This is not a real event."
+  },
+  {
+    "id": "ebf75ab8-e215-5650-8eaa-5176872bc9ec",
+    "name": "Demo: Robotics & Physical Ai",
+    "citySlug": "sf",
+    "date": "2026-10-07",
+    "startTime": "10:00",
+    "endDate": "2026-10-07",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about ROBOTICS & PHYSICAL AI. This is not a real event."
+  },
+  {
+    "id": "e467dea9-66c4-5966-9a9c-137784689a53",
+    "name": "Demo: Ai Security",
+    "citySlug": "sf",
+    "date": "2026-10-09",
+    "startTime": "10:00",
+    "endDate": "2026-10-09",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about AI SECURITY. This is not a real event."
+  },
+  {
+    "id": "85fbef43-ff38-5b74-bab3-dff294dabe70",
+    "name": "Demo: Creator Economy",
+    "citySlug": "sf",
+    "date": "2026-10-11",
+    "startTime": "10:00",
+    "endDate": "2026-10-11",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about CREATOR ECONOMY. This is not a real event."
+  },
+  {
+    "id": "97c65e10-9345-5e38-8673-8b8cf49d3643",
+    "name": "Demo: Ai Sales",
+    "citySlug": "sf",
+    "date": "2026-10-06",
+    "startTime": "10:00",
+    "endDate": "2026-10-06",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about AI SALES. This is not a real event."
+  },
+  {
+    "id": "667e1d04-c086-503a-b8df-cf60875736ff",
+    "name": "Demo: Ai Finance & Accounting",
+    "citySlug": "sf",
+    "date": "2026-10-08",
+    "startTime": "10:00",
+    "endDate": "2026-10-08",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about AI FINANCE & ACCOUNTING. This is not a real event."
+  },
+  {
+    "id": "344a8bf1-9e6e-5867-bffa-13d6ec0bb610",
+    "name": "Demo: Geo / Aeo",
+    "citySlug": "sf",
+    "date": "2026-10-10",
+    "startTime": "10:00",
+    "endDate": "2026-10-10",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about GEO / AEO. This is not a real event."
+  },
+  {
+    "id": "eb624f04-12c4-50ad-9c0f-fe6e2eeb565d",
+    "name": "Demo: Ai Biology & Drug Discovery",
+    "citySlug": "sf",
+    "date": "2026-10-05",
+    "startTime": "10:00",
+    "endDate": "2026-10-05",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/sf",
+    "description": "Fictional example about AI BIOLOGY & DRUG DISCOVERY. This is not a real event."
+  }
+]

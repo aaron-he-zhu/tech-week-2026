@@ -1,0 +1,302 @@
+{
+  "ai-video": {
+    "d32dbeb0-dd87-57b4-861d-6fd130c346d4": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI VIDEO"
+      ],
+      "evidence": "Fictional example about AI VIDEO. This is not a real event."
+    }
+  },
+  "ai-companions": {
+    "4bc20631-df59-5f12-8e1c-8d8636c8ff35": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI COMPANIONS"
+      ],
+      "evidence": "Fictional example about AI COMPANIONS. This is not a real event."
+    }
+  },
+  "ai-marketing": {
+    "4e64005d-6692-5a79-bf7a-c79b0c38ae64": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI CONTENT & ADS"
+      ],
+      "evidence": "Fictional example about AI CONTENT & ADS. This is not a real event."
+    }
+  },
+  "personal-assistants": {
+    "0e6bc1e7-4065-50cb-89fc-7b53cc7e11d4": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "PERSONAL AI AGENTS"
+      ],
+      "evidence": "Fictional example about PERSONAL AI AGENTS. This is not a real event."
+    }
+  },
+  "agent-harness": {
+    "6cbfa51d-2168-5d70-97ed-f6d4d73a8596": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AGENT HARNESS"
+      ],
+      "evidence": "Fictional example about AGENT HARNESS. This is not a real event."
+    }
+  },
+  "voice-agents": {
+    "6416d977-fd41-5f76-9dfc-ddb4d3161919": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "VOICE AGENTS"
+      ],
+      "evidence": "Fictional example about VOICE AGENTS. This is not a real event."
+    }
+  },
+  "world-models": {
+    "f687009e-7d21-5841-b37d-bfbe299212fb": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "WORLD MODELS"
+      ],
+      "evidence": "Fictional example about WORLD MODELS. This is not a real event."
+    }
+  },
+  "vibe-coding": {
+    "4509c715-3630-5934-a2ab-2b84dada9f25": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "VIBE CODING & APP BUILDING"
+      ],
+      "evidence": "Fictional example about VIBE CODING & APP BUILDING. This is not a real event."
+    }
+  },
+  "multi-agent": {
+    "70cae9c9-1b14-5252-b89f-eb2f1f147148": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "MULTI-AGENT"
+      ],
+      "evidence": "Fictional example about MULTI-AGENT. This is not a real event."
+    }
+  },
+  "agent-memory": {
+    "c0188031-df0b-5c7d-a4a0-4397c380d69f": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "MEMORY, CONTEXT & KNOWLEDGE"
+      ],
+      "evidence": "Fictional example about MEMORY, CONTEXT & KNOWLEDGE. This is not a real event."
+    }
+  },
+  "ai-evals": {
+    "524d2f12-2c14-558d-b379-d59454471384": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "EVALS & OBSERVABILITY"
+      ],
+      "evidence": "Fictional example about EVALS & OBSERVABILITY. This is not a real event."
+    }
+  },
+  "mcp-tools": {
+    "b75296b7-b399-5ed4-882e-5f3cb18ae492": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "MCP & TOOL USE"
+      ],
+      "evidence": "Fictional example about MCP & TOOL USE. This is not a real event."
+    }
+  },
+  "inference-compute": {
+    "886416f6-de7c-54f3-a0d4-69b7a82c6162": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "INFERENCE & COMPUTE"
+      ],
+      "evidence": "Fictional example about INFERENCE & COMPUTE. This is not a real event."
+    }
+  },
+  "open-models": {
+    "bc40b48c-bf58-593d-aa58-24cbc1d36aaf": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "OPEN MODELS & SELF-HOSTING"
+      ],
+      "evidence": "Fictional example about OPEN MODELS & SELF-HOSTING. This is not a real event."
+    }
+  },
+  "ai-design": {
+    "b06f8bcd-7c15-5b6f-8a59-7b4b4ef76621": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI DESIGN"
+      ],
+      "evidence": "Fictional example about AI DESIGN. This is not a real event."
+    }
+  },
+  "ai-music": {
+    "158d1882-1ff2-596b-b060-b8d5265c2cc4": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI MUSIC & AUDIO"
+      ],
+      "evidence": "Fictional example about AI MUSIC & AUDIO. This is not a real event."
+    }
+  },
+  "robotics": {
+    "ebf75ab8-e215-5650-8eaa-5176872bc9ec": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "ROBOTICS & PHYSICAL AI"
+      ],
+      "evidence": "Fictional example about ROBOTICS & PHYSICAL AI. This is not a real event."
+    }
+  },
+  "health-ai": {
+    "09131ea5-a2b5-5829-8f0f-57a1a06a5061": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI HEALTHCARE & CLINICAL"
+      ],
+      "evidence": "Fictional example about AI HEALTHCARE & CLINICAL. This is not a real event."
+    }
+  },
+  "ai-security": {
+    "e467dea9-66c4-5966-9a9c-137784689a53": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI SECURITY"
+      ],
+      "evidence": "Fictional example about AI SECURITY. This is not a real event."
+    }
+  },
+  "ai-commerce": {
+    "af066ca0-6156-512e-b473-5669f3238f39": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AGENTIC COMMERCE"
+      ],
+      "evidence": "Fictional example about AGENTIC COMMERCE. This is not a real event."
+    }
+  },
+  "creator-economy": {
+    "85fbef43-ff38-5b74-bab3-dff294dabe70": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "CREATOR ECONOMY"
+      ],
+      "evidence": "Fictional example about CREATOR ECONOMY. This is not a real event."
+    }
+  },
+  "ai-games": {
+    "666ee0b9-da3b-5f71-ac2b-1b34ed94b518": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI GAMES & XR"
+      ],
+      "evidence": "Fictional example about AI GAMES & XR. This is not a real event."
+    }
+  },
+  "ai-sales": {
+    "97c65e10-9345-5e38-8673-8b8cf49d3643": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI SALES"
+      ],
+      "evidence": "Fictional example about AI SALES. This is not a real event."
+    }
+  },
+  "ai-support": {
+    "329d253f-ed71-58ae-881e-55fd48c41d2a": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI CUSTOMER SUPPORT"
+      ],
+      "evidence": "Fictional example about AI CUSTOMER SUPPORT. This is not a real event."
+    }
+  },
+  "ai-finance": {
+    "667e1d04-c086-503a-b8df-cf60875736ff": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI FINANCE & ACCOUNTING"
+      ],
+      "evidence": "Fictional example about AI FINANCE & ACCOUNTING. This is not a real event."
+    }
+  },
+  "ai-legal": {
+    "3e802da2-11b6-5aff-92d5-23aa05a08837": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI LEGAL & CONTRACTS"
+      ],
+      "evidence": "Fictional example about AI LEGAL & CONTRACTS. This is not a real event."
+    }
+  },
+  "geo-aeo": {
+    "344a8bf1-9e6e-5867-bffa-13d6ec0bb610": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "GEO / AEO"
+      ],
+      "evidence": "Fictional example about GEO / AEO. This is not a real event."
+    }
+  },
+  "coding-agents": {
+    "0fcc17eb-7591-5916-a939-ed7320d696d5": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "CODING AGENTS & ENGINEERING"
+      ],
+      "evidence": "Fictional example about CODING AGENTS & ENGINEERING. This is not a real event."
+    }
+  },
+  "ai-bio": {
+    "eb624f04-12c4-50ad-9c0f-fe6e2eeb565d": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "AI BIOLOGY & DRUG DISCOVERY"
+      ],
+      "evidence": "Fictional example about AI BIOLOGY & DRUG DISCOVERY. This is not a real event."
+    }
+  },
+  "post-training": {
+    "59b9ce11-7b5e-573e-95f9-050a94a238a3": {
+      "kind": "direct",
+      "score": 20,
+      "terms": [
+        "POST-TRAINING & FINE-TUNING"
+      ],
+      "evidence": "Fictional example about POST-TRAINING & FINE-TUNING. This is not a real event."
+    }
+  }
+}

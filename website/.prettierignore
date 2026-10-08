@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.local/
+.venv/
+.wrangler/
+backend/event-ids.mjs
+src/*.json
+!src/calendar-labels.json
+!src/site.json
+!src/topics.json
+src/locales/
+package-lock.json
+
+backend/worker-bundle.js

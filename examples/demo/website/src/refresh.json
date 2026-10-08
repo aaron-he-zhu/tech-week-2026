@@ -1,0 +1,20 @@
+{
+  "baseline": "Demo",
+  "complete": true,
+  "total": 30,
+  "new": [],
+  "removed": [],
+  "changed": [],
+  "field_counts": {},
+  "media_changes": [],
+  "cities": {
+    "sf": 15,
+    "la": 15
+  },
+  "new_summary": "示例数据不代表真实活动。",
+  "luma": {
+    "summary": "示例数据不代表真实活动。",
+    "findings": [],
+    "leads": []
+  }
+}

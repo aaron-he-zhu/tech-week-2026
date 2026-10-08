@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="tw-api-url" content="{{ api_url }}" />
+    <meta name="theme-color" content="#f7f6f0" />
+    <title>{{ title }} · Tech Week 2026 活动指南</title>
+    <meta name="description" content="{{ description }}" />
+    <meta property="og:title" content="{{ title }} · Tech Week 2026 活动指南" />
+    <meta property="og:description" content="{{ description }}" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="stylesheet" href="/assets/style.css?v={{ asset_version }}" />
+    <script src="/assets/wishlist.js?v={{ asset_version }}" defer></script>
+    <script src="/assets/community.js?v={{ asset_version }}" defer></script>
+    <script src="/assets/google-login.js?v={{ asset_version }}" defer></script>
+    <script src="/assets/calendar.js?v={{ asset_version }}" defer></script>
+    <script src="/assets/app.js?v={{ asset_version }}" defer></script>
+  </head>
+  <body style="--accent:{{ accent }}">
+    <a class="skip" href="#main">跳到内容</a>
+    <div class="shell">
+      <header class="topbar">
+        <a class="wordmark" href="/" aria-label="Tech Week 2026 活动指南 首页">
+          <span class="brand-icon" aria-hidden="true">TW<br />26</span>
+          <span>Tech Week 2026<small>THE SF + LA FIELD GUIDE</small> </span> </a
+        >{{ navigation_html }}<span class="edition">CALIFORNIA / 2026</span>
+      </header>
+      <main id="main">{% if demo %}<p class="notice" role="note">演示模式：以下活动均为虚构示例，不用于报名。</p>{% endif %}{{ body_html }}</main>
+      <footer class="footer">
+        <p>一份独立的双语活动指南。非 Tech Week 官方网站。<br />数据快照 {{ snapshot_timestamp }} · 时间均为 PDT · 申请不代表获准入场</p>
+        <p>
+          <a href="https://www.tech-week.com/calendar/sf" target="_blank" rel="noopener noreferrer">SF 官方日历 ↗</a> &nbsp; <a href="https://www.tech-week.com/calendar/la" target="_blank" rel="noopener noreferrer">LA 官方日历 ↗</a>
+          <br />
+          <a href="/updates/">本次更新记录</a> &nbsp; <a href="/guide/#sources">数据与归类说明</a> &nbsp; <a href="/downloads/events.csv" download>下载完整清单 ↓</a>
+        </p>
+      </footer> </div
+    >{{ mobile_navigation_html }}{{ page_data_html }}<div id="wish-message" class="wish-toast" role="status" hidden> </div>
+    <dialog id="wish-people-dialog" aria-labelledby="wish-people-heading">
+      <div class="wish-dialog-head">
+        <h2 id="wish-people-heading">谁想去</h2>
+        <button type="button" data-wish-close aria-label="关闭名单">×</button>
+      </div>
+      <p class="site-caption">本站收藏，按匿名身份去重，不代表官方报名或获准入场。昵称由访客填写，可重复。</p>
+      <ul id="wish-people-list" class="people-list"> </ul>
+      <button id="wish-people-more" type="button" class="wish-action" hidden>查看更多昵称</button>
+    </dialog>
+  </body>
+</html>

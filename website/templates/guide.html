@@ -1,0 +1,45 @@
+<article class="article">
+  <div class="eyebrow">BEFORE YOU GO</div>
+  <h1>日程与报名说明</h1>
+  <p>Tech Week 是分散在城市各处、由不同公司与社群举办的一系列活动。活动地点、报名规则与议程由各主办方分别安排。</p>
+  <h2>城市与活动区域</h2>
+  <p>SF 更集中在 AI、开发工具、企业软件和技术创业；LA 的创作者、影视娱乐、消费体验与航天制造特色更明显。两城都有融资、增长、健康科技与动手活动。</p>
+  <p>SF 的 SOMA、FiDi 与 Downtown 是主要活动区域，但清单也有 Palo Alto、Stanford、East Bay 和线上活动。LA 可以按 Santa Monica／Venice、Downtown、Long Beach／Torrance 等区域分组安排，跨区留出通勤余量。</p>
+  <h2>周二至周四，选择最多</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>星期</th>
+        <th>SF · 首次开始条目</th>
+        <th>LA · 首次开始条目</th>
+      </tr>
+    </thead>
+    <tbody>{{ day_rows_html }}</tbody>
+  </table>
+  <p>清单同时包含短时交流、黑客松、全天峰会和多日 House；跨日记录不等于每天每个时段都开放。</p>
+  <h2>报名成功，不只看一个按钮</h2>
+  <ul>
+    <li>官网“开放”表示可以申请，不保证获准入场、免费或现场仍有座位。</li>
+    <li>查看主办方确认邮件；仅限邀请、候补、分时段入场和携带证件的要求可能写在正文里。</li>
+    <li>具体地址可能在获批后提供。不要把清单中的区域标签当作完整地址。</li>
+    <li>主办方有时会更新议程。报名页、官网日历与邮件不一致时，核对最新通知。</li>
+  </ul>
+  <h2>本次更新</h2>
+  <p>
+    <a href="/updates/">查看新增、移出日历及已有活动的修改记录 →</a>
+  </p>
+  <h2 id="sources">这份指南如何整理</h2>
+  {% if demo %}<p>这是开发演示，活动、主办方和地点均为虚构。线上日历数据由部署者单独提供。</p>{% else %}
+  <p>基础数据来自 <a href="https://www.tech-week.com/calendar/sf">SF 官方日历</a>、<a href="https://www.tech-week.com/calendar/la">LA 官方日历</a>与其<a href="https://www.tech-week.com/mcp">公开日历接口</a>。{{ checked_local }} 读取 SF {{ sf_pages }} 页、LA {{ la_pages }} 页，按官方活动 ID 去重，共 {{ total_count }} 条。活动可能跨主题，不同专题的数量不能相加。</p>
+  <p>{{ topic_count }} 个专题是本指南的阅读分类，不是主办方官方 Track，也不是热度排名。在 {{ total_count }} 条官方记录中检索标题与正文，逐项核对候选活动的具体议程后收录；{{ nonempty_count }} 条有非空介绍，{{ empty_count }} 条仅有基础信息。B2B、Deep Tech、媒体娱乐等泛标签、赞助商业务和同名关键词不会直接增加专题场次。此为人工整理的相关活动快照，仍可能遗漏未明确描述议程的活动。AI 陪伴与个人助理另外按活动全文逐场归类：前者以角色、情感关系和互动叙事为核心，后者以替个人办事与执行任务为核心；宽泛的 Consumer AI、Personal AI 标签不单独构成收录依据。最终以活动正文为准。“AI 创业与融资”和“企业 AI”已取消为专题；融资与投资、路演与 Demo、投资人交流可在全部活动页筛选。筛选依据官方融资/投资主题与路演、Networking、Matchmaking 形式标签，不要求活动涉及 AI。</p>
+  <p>部分重点活动经过全文阅读并撰写中文简介；其余短介绍依据官方主题和形式标签生成，没有把推测写成具体议程。System 1 决策模型已并入 Agent Harness，作为 Agent 决策机制的一部分。以 Jev、Laya 等为参照，按活动全文核实具体模型与机制；实时语音、实时视频和一般低延迟标签本身不构成决策模型相关依据。</p>
+  <p>本次逐条重读 {{ total_count }} 条官方活动详情，并补读 {{ full_pages_read }} 篇可能被接口截断的网页正文。正文、日程、标题、区域、报名状态和封面变化均记录在<a href="/updates/">本次更新记录</a>。列表字段与活动正文、Luma 不一致时，在相应活动卡片标明差异；没有把“移出日历”直接写成取消。</p>
+  <p>{{ luma_summary }} Luma 搜索每次只返回一页排序结果，不是全站导出。决策模型的明确匹配和两条补充线索分别展示，见<a href="/topics/agent-harness/#system-one-review">核对记录</a>。Luma 补充线索不计入官方日历总数或专题场次。费用与名额以报名页最新显示为准，网站呈现数据快照。</p>
+  <p>这是独立中文导览，与 a16z、Tech Week 或各活动主办方无隶属关系。网站只收录公开活动信息，报名跳转主办方页面。</p>
+  {% endif %}
+  <h2>留一份完整清单</h2>
+  <p>
+    <a href="/downloads/events.csv" download>下载全部 {{ total_count }} 条活动 CSV ↓</a>
+    <br />包含日期、时间、主题、形式、区域、官网报名状态和官方链接。</p
+  >
+</article>

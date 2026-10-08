@@ -1,0 +1,125 @@
+name: Check and deploy to Cloudflare
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Keep API and website deployments from different commits from interleaving.
+concurrency:
+  group: cloudflare-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check public source boundary
+        run: python3 .github/scripts/check-public-content.py
+      - name: Scan Git history for credentials
+        run: bash .github/scripts/check-secrets.sh
+
+  validate:
+    needs: secret-scan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: website
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: website/.node-version
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: website/.python-version
+      - name: Install locked dependencies
+        run: |
+          npm ci
+          python3 -m pip install -r requirements-dev.txt
+      - name: Build, validate both languages and run tests
+        run: npm run verify
+
+  deploy:
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.CLOUDFLARE_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: production
+    env:
+      SITE_URL: ${{ vars.SITE_URL }}
+      API_URL: ${{ vars.API_URL }}
+    defaults:
+      run:
+        working-directory: website
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Require an immutable content revision
+        if: vars.CONTENT_REPOSITORY != ''
+        env:
+          CONTENT_REF: ${{ vars.CONTENT_REF }}
+        run: '[[ "$CONTENT_REF" =~ ^[a-f0-9]{40}$ ]]'
+      - name: Read private production content
+        if: vars.CONTENT_REPOSITORY != ''
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ vars.CONTENT_REPOSITORY }}
+          ref: ${{ vars.CONTENT_REF }}
+          ssh-key: ${{ secrets.CONTENT_READ_KEY }}
+          path: .private-content
+          persist-credentials: false
+      - name: Select private production content
+        if: vars.CONTENT_REPOSITORY != ''
+        run: echo "TECH_WEEK_CONTENT_DIR=$GITHUB_WORKSPACE/.private-content" >> "$GITHUB_ENV"
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: website/.node-version
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: website/.python-version
+      - name: Install locked dependencies
+        run: |
+          npm ci
+          python3 -m pip install -r requirements-dev.txt
+      - name: Verify the production build
+        run: npm run verify
+      - name: Prepare deployment configuration
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          D1_DATABASE_ID: ${{ vars.D1_DATABASE_ID }}
+          GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
+        run: npm run prepare:deploy
+      - name: Deploy interaction API
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          WRANGLER_SEND_METRICS: "false"
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" || { echo "Missing CLOUDFLARE_API_TOKEN repository secret"; exit 1; }
+          npx wrangler deploy --config .local/deploy/api.wrangler.json
+      - name: Deploy website
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          WRANGLER_SEND_METRICS: "false"
+        run: npx wrangler deploy --config .local/deploy/site.wrangler.json
+      - name: Verify live homepage and read-only API
+        run: python3 scripts/check_deploy.py

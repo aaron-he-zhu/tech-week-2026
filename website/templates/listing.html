@@ -1,0 +1,77 @@
+<div class="events-layout">
+  <section aria-label="相关活动"
+    >{{ city_tabs_html }}<div class="filter-search">{{ search_html }}</div>
+    <div class="filters"
+      >{{ purpose_filter_html }}<div class="filter">
+        <label for="filter-date">日期 · PDT</label>
+        <select id="filter-date"
+          >{{ date_options_html }}</select
+        >
+      </div>
+      <div class="filter">
+        <label for="filter-format">活动形式</label>
+        <select id="filter-format"
+          >{{ format_options_html }}</select
+        >
+      </div>
+      <div class="filter">
+        <label for="filter-status">报名状态</label>
+        <select id="filter-status">
+          <option value="">所有状态</option>
+          <option value="open">开放申请</option>
+          <option value="waitlist">候补</option>
+          <option value="full">已满</option>
+          <option value="closed">已关闭</option>
+        </select>
+      </div>
+      <div class="filter">
+        <label for="filter-sort">排列方式</label>
+        <select id="filter-sort">
+          <option value="time">活动时间（从早到晚）</option>
+          <option value="popular">最多人想去</option
+          >{{ relevance_option_html }}</select
+        >
+      </div>
+    </div>
+    <div class="explorer-toolbar">
+      <label class="address-filter"><input type="checkbox" id="filter-address" />只看有爆料地址</label>
+      <div class="segments view-switch" role="group" aria-label="活动视图">
+        <button type="button" data-view="list" aria-pressed="true">列表</button>
+        <button type="button" data-view="calendar" aria-pressed="false">日历</button>
+      </div>
+    </div>
+    <div class="address-filter-feedback" id="address-filter-feedback" hidden> <p id="address-filter-status" role="status"></p><button type="button" id="address-filter-retry" class="reset" hidden>重试</button> </div>
+    <details class="calendar-picker" id="calendar-picker">
+      <summary>日历筛选 <span id="calendar-selection">所有日期</span></summary>
+      <div class="calendar-heading"><h3 id="calendar-month"></h3><button type="button" class="reset" id="calendar-all">所有日期</button></div>
+      <div class="calendar-weekdays" aria-hidden="true"><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span></div>
+      <div class="calendar-grid" id="calendar-grid" role="group" aria-label="选择活动日期"></div>
+      <p class="site-caption">日期下方是应用其他筛选后的活动数。跨日活动会计入覆盖的每一天。</p>
+    </details>
+    <p id="calendar-view-note" class="site-caption" hidden>日历按日期和时间排列。跨日活动可能在多天出现，当日开放时段请核对主办方议程。</p>
+    <div class="result-line">
+      <span id="event-count" aria-live="polite">{{ event_count }} 场活动 · SF + LA</span>
+      <button class="reset" data-reset>清除筛选</button>
+    </div>
+    <div id="event-list">{{ event_cards_html }}</div>
+    <div class="empty" id="event-empty" hidden>
+      <h3>这个组合下暂时没有活动</h3>
+      <p>换一个日期或城市，或清除筛选查看本页全部活动。</p>
+      <button class="reset" data-reset>清除筛选</button>
+    </div>
+    <button id="load-more" class="load-more" {{ load_more_hidden }}>查看更多活动</button>
+    <noscript>
+      <p class="noscript">这里展示前 12 场。启用 JavaScript 可筛选并加载更多，或<a href="/downloads/events.csv">下载完整清单</a>。</p>
+    </noscript>
+    <p class="site-caption">报名状态为 {{ snapshot_date }} 快照。跨日活动会出现在其涵盖的日期；具体每日时段请核对主办方议程。</p>{{ review_html }}</section
+  >
+  <aside class="events-sidebar">
+    <div class="side-note">
+      <h2>读懂这份活动清单</h2>
+      <p>专题根据活动标题与正文中的具体内容归类。只出现在赞助商介绍中的业务、宽泛行业标签，不单独计入专题场次。</p>
+      <p>“开放申请”仍可能需要审核。点开活动，确认地点、费用与入场资格。</p>
+      <a class="text-link" href="/guide/#sources">查看归类说明 ↗</a>
+    </div>
+    <div class="side-note"> <h2>继续探索</h2>{{ sidebar_html }}</div>
+  </aside>
+</div>

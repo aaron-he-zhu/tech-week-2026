@@ -1,0 +1,17 @@
+{
+  "name": "tech-week-wishlist",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-05",
+  "workers_dev": true,
+  "vars": {
+    "SITE_URL": "http://127.0.0.1:4173",
+    "GOOGLE_CLIENT_ID": ""
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tech-week-wishlist",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
+}

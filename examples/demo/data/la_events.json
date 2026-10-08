@@ -1,0 +1,377 @@
+[
+  {
+    "id": "4bc20631-df59-5f12-8e1c-8d8636c8ff35",
+    "name": "Demo: Ai Companions",
+    "citySlug": "la",
+    "date": "2026-10-13",
+    "startTime": "10:00",
+    "endDate": "2026-10-13",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about AI COMPANIONS. This is not a real event."
+  },
+  {
+    "id": "0e6bc1e7-4065-50cb-89fc-7b53cc7e11d4",
+    "name": "Demo: Personal Ai Agents",
+    "citySlug": "la",
+    "date": "2026-10-15",
+    "startTime": "10:00",
+    "endDate": "2026-10-15",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about PERSONAL AI AGENTS. This is not a real event."
+  },
+  {
+    "id": "6416d977-fd41-5f76-9dfc-ddb4d3161919",
+    "name": "Demo: Voice Agents",
+    "citySlug": "la",
+    "date": "2026-10-17",
+    "startTime": "10:00",
+    "endDate": "2026-10-17",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about VOICE AGENTS. This is not a real event."
+  },
+  {
+    "id": "4509c715-3630-5934-a2ab-2b84dada9f25",
+    "name": "Demo: Vibe Coding & App Building",
+    "citySlug": "la",
+    "date": "2026-10-12",
+    "startTime": "10:00",
+    "endDate": "2026-10-12",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about VIBE CODING & APP BUILDING. This is not a real event."
+  },
+  {
+    "id": "c0188031-df0b-5c7d-a4a0-4397c380d69f",
+    "name": "Demo: Memory, Context & Knowledge",
+    "citySlug": "la",
+    "date": "2026-10-14",
+    "startTime": "10:00",
+    "endDate": "2026-10-14",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about MEMORY, CONTEXT & KNOWLEDGE. This is not a real event."
+  },
+  {
+    "id": "b75296b7-b399-5ed4-882e-5f3cb18ae492",
+    "name": "Demo: Mcp & Tool Use",
+    "citySlug": "la",
+    "date": "2026-10-16",
+    "startTime": "10:00",
+    "endDate": "2026-10-16",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about MCP & TOOL USE. This is not a real event."
+  },
+  {
+    "id": "bc40b48c-bf58-593d-aa58-24cbc1d36aaf",
+    "name": "Demo: Open Models & Self-Hosting",
+    "citySlug": "la",
+    "date": "2026-10-18",
+    "startTime": "10:00",
+    "endDate": "2026-10-18",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about OPEN MODELS & SELF-HOSTING. This is not a real event."
+  },
+  {
+    "id": "158d1882-1ff2-596b-b060-b8d5265c2cc4",
+    "name": "Demo: Ai Music & Audio",
+    "citySlug": "la",
+    "date": "2026-10-13",
+    "startTime": "10:00",
+    "endDate": "2026-10-13",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about AI MUSIC & AUDIO. This is not a real event."
+  },
+  {
+    "id": "09131ea5-a2b5-5829-8f0f-57a1a06a5061",
+    "name": "Demo: Ai Healthcare & Clinical",
+    "citySlug": "la",
+    "date": "2026-10-15",
+    "startTime": "10:00",
+    "endDate": "2026-10-15",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about AI HEALTHCARE & CLINICAL. This is not a real event."
+  },
+  {
+    "id": "af066ca0-6156-512e-b473-5669f3238f39",
+    "name": "Demo: Agentic Commerce",
+    "citySlug": "la",
+    "date": "2026-10-17",
+    "startTime": "10:00",
+    "endDate": "2026-10-17",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about AGENTIC COMMERCE. This is not a real event."
+  },
+  {
+    "id": "666ee0b9-da3b-5f71-ac2b-1b34ed94b518",
+    "name": "Demo: Ai Games & Xr",
+    "citySlug": "la",
+    "date": "2026-10-12",
+    "startTime": "10:00",
+    "endDate": "2026-10-12",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about AI GAMES & XR. This is not a real event."
+  },
+  {
+    "id": "329d253f-ed71-58ae-881e-55fd48c41d2a",
+    "name": "Demo: Ai Customer Support",
+    "citySlug": "la",
+    "date": "2026-10-14",
+    "startTime": "10:00",
+    "endDate": "2026-10-14",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about AI CUSTOMER SUPPORT. This is not a real event."
+  },
+  {
+    "id": "3e802da2-11b6-5aff-92d5-23aa05a08837",
+    "name": "Demo: Ai Legal & Contracts",
+    "citySlug": "la",
+    "date": "2026-10-16",
+    "startTime": "10:00",
+    "endDate": "2026-10-16",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about AI LEGAL & CONTRACTS. This is not a real event."
+  },
+  {
+    "id": "0fcc17eb-7591-5916-a939-ed7320d696d5",
+    "name": "Demo: Coding Agents & Engineering",
+    "citySlug": "la",
+    "date": "2026-10-18",
+    "startTime": "10:00",
+    "endDate": "2026-10-18",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about CODING AGENTS & ENGINEERING. This is not a real event."
+  },
+  {
+    "id": "59b9ce11-7b5e-573e-95f9-050a94a238a3",
+    "name": "Demo: Post-Training & Fine-Tuning",
+    "citySlug": "la",
+    "date": "2026-10-13",
+    "startTime": "10:00",
+    "endDate": "2026-10-13",
+    "endTime": "11:00",
+    "hosts": [
+      "Example Community"
+    ],
+    "neighborhoods": [
+      "Demo district"
+    ],
+    "themes": [
+      "AI"
+    ],
+    "formats": [
+      "Roundtable / Workshop"
+    ],
+    "registration": "open",
+    "isFeatured": false,
+    "eventUrl": "https://www.tech-week.com/calendar/la",
+    "description": "Fictional example about POST-TRAINING & FINE-TUNING. This is not a real event."
+  }
+]

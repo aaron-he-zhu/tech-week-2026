@@ -1,0 +1,275 @@
+[
+  {
+    "slug": "ai-video",
+    "name": "AI 视频",
+    "en": "AI VIDEO",
+    "group": "创意与消费",
+    "color": "#d46b3f",
+    "description": "AI 视频生成、编辑、影视制作与虚拟拍摄流程。收录 AI 在影像创作中的明确应用，排除普通影视、媒体和娱乐社交。",
+    "source": null
+  },
+  {
+    "slug": "ai-companions",
+    "name": "AI 陪伴",
+    "en": "AI COMPANIONS",
+    "group": "创意与消费",
+    "color": "#9c6b9d",
+    "description": "以角色互动、角色扮演与持续情感关系为核心的 AI 产品，覆盖虚拟人物、互动剧情和 AI 朋友。分类参照：Character.ai、Zeta、Tipsy。",
+    "source": null
+  },
+  {
+    "slug": "ai-marketing",
+    "name": "AI 内容与广告",
+    "en": "AI CONTENT & ADS",
+    "group": "增长与商业",
+    "color": "#c76443",
+    "description": "AI 辅助内容制作、广告创意、投放与营销流程。搜索推荐优化见 GEO／AEO，销售跟进见 AI 销售。",
+    "source": null
+  },
+  {
+    "slug": "personal-assistants",
+    "name": "个人助理",
+    "en": "PERSONAL AI AGENTS",
+    "group": "Agent 与系统",
+    "color": "#6d8471",
+    "description": "围绕个人事务与任务执行的 AI Agent，覆盖主动跟进、跨应用办事、日程与出行安排，以及个人记忆。分类参照：Muse、Cue、Dots、Instinct。",
+    "source": null
+  },
+  {
+    "slug": "agent-harness",
+    "name": "Agent Harness",
+    "en": "AGENT HARNESS",
+    "group": "Agent 与系统",
+    "color": "#587c81",
+    "description": "Agent 的运行与决策机制：工具、状态、执行循环、恢复与人工介入。也涵盖 System 1（Jev、Laya 等）的快速决策与深度推理分工。",
+    "source": [
+      "Anthropic：长期 Agent 的 Harness",
+      "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
+    ]
+  },
+  {
+    "slug": "voice-agents",
+    "name": "语音 Agent",
+    "en": "VOICE AGENTS",
+    "group": "Agent 与系统",
+    "color": "#6f83a4",
+    "description": "听得懂、接得上、能办事的语音系统。关注轮次切换、打断、嘈杂环境、工具调用，以及从演示走向电话或客服场景。",
+    "source": null
+  },
+  {
+    "slug": "world-models",
+    "name": "世界模型",
+    "en": "WORLD MODELS",
+    "group": "模型与基础设施",
+    "color": "#807950",
+    "description": "世界建模、空间智能、可交互环境生成，以及用于预测、规划或训练的环境模型。Physical AI、XR 和实时视频标签本身不构成收录依据。",
+    "source": null
+  },
+  {
+    "slug": "vibe-coding",
+    "name": "Vibe Coding 与应用搭建",
+    "en": "VIBE CODING & APP BUILDING",
+    "group": "Agent 与系统",
+    "color": "#5f8192",
+    "description": "用自然语言、可视化工具与 AI 搭建网站、原型和应用。普通黑客松和工具赞助本身不构成收录依据。",
+    "source": null
+  },
+  {
+    "slug": "multi-agent",
+    "name": "多 Agent 协作",
+    "en": "MULTI-AGENT",
+    "group": "Agent 与系统",
+    "color": "#75866c",
+    "description": "多个 Agent 的分工、交接、通信与共同执行。一般 Agent 工作流或框架活动不自动视为多 Agent 协作。",
+    "source": null
+  },
+  {
+    "slug": "agent-memory",
+    "name": "记忆、上下文与知识库",
+    "en": "MEMORY, CONTEXT & KNOWLEDGE",
+    "group": "Agent 与系统",
+    "color": "#8a795c",
+    "description": "Agent 记忆、上下文工程、RAG、检索与知识库。覆盖信息的保存、组织、检索、更新与调用，以及向量搜索、知识图谱和有来源的回答。品牌在 AI 搜索中的曝光归 GEO／AEO。",
+    "source": null
+  },
+  {
+    "slug": "ai-evals",
+    "name": "评测与可观测性",
+    "en": "EVALS & OBSERVABILITY",
+    "group": "Agent 与系统",
+    "color": "#667c87",
+    "description": "把“感觉不错”变成可重复的质量判断。寻找任务评测、轨迹分析、生产监控和回归测试的实际经验。",
+    "source": null
+  },
+  {
+    "slug": "mcp-tools",
+    "name": "MCP 与工具连接",
+    "en": "MCP & TOOL USE",
+    "group": "Agent 与系统",
+    "color": "#708b86",
+    "description": "MCP、工具发现与调用，以及 Agent 对数据、应用和业务系统的连接。一般 API 或身份技术活动不自动归入。",
+    "source": null
+  },
+  {
+    "slug": "inference-compute",
+    "name": "推理与算力",
+    "en": "INFERENCE & COMPUTE",
+    "group": "模型与基础设施",
+    "color": "#978253",
+    "description": "AI 推理服务、GPU 与加速器、算力容量和模型运行成本。基础设施标签不单独构成收录依据。",
+    "source": null
+  },
+  {
+    "slug": "open-models",
+    "name": "开放模型与自托管",
+    "en": "OPEN MODELS & SELF-HOSTING",
+    "group": "模型与基础设施",
+    "color": "#75804f",
+    "description": "开放权重模型的选择、运行、部署和运维。模型后训练与微调另设专题；一般前沿模型活动不因提到模型就收录。",
+    "source": null
+  },
+  {
+    "slug": "ai-design",
+    "name": "AI 设计与创意工具",
+    "en": "AI DESIGN",
+    "group": "创意与消费",
+    "color": "#b0736b",
+    "description": "AI 图像、视觉设计、产品界面与创意工具的实际应用。普通设计、创作者标签和软件赞助不单独构成收录依据。",
+    "source": null
+  },
+  {
+    "slug": "ai-music",
+    "name": "AI 音乐与音频",
+    "en": "AI MUSIC & AUDIO",
+    "group": "创意与消费",
+    "color": "#9273a3",
+    "description": "音乐、声音生成与音频创作工具。收录有 AI 创作或声音技术议题的活动；普通演出和背景音乐不构成收录依据。",
+    "source": null
+  },
+  {
+    "slug": "robotics",
+    "name": "机器人与 Physical AI",
+    "en": "ROBOTICS & PHYSICAL AI",
+    "group": "前沿与产业",
+    "color": "#64856d",
+    "description": "具身智能、机器人感知与控制、自主系统和机器人学习。排除泛硬件、制造业与航天交流。",
+    "source": null
+  },
+  {
+    "slug": "health-ai",
+    "name": "AI 医疗与临床",
+    "en": "AI HEALTHCARE & CLINICAL",
+    "group": "前沿与产业",
+    "color": "#808e71",
+    "description": "AI 在诊疗、患者服务、医疗文书和临床工作流中的应用与评估。药物研发另设专题；普通健康、养生和医疗投资活动不凭行业标签收录。",
+    "source": null
+  },
+  {
+    "slug": "ai-security",
+    "name": "AI 安全与身份",
+    "en": "AI SECURITY",
+    "group": "模型与基础设施",
+    "color": "#7c768e",
+    "description": "AI 与 Agent 的身份、权限、数据保护、安全评估和治理。普通网络安全或合规活动不凭行业标签收录。",
+    "source": null
+  },
+  {
+    "slug": "ai-commerce",
+    "name": "Agent 商务与支付",
+    "en": "AGENTIC COMMERCE",
+    "group": "增长与商业",
+    "color": "#a48258",
+    "description": "Agent 代表用户选购、交易、支付和获得交易授权。普通电商、金融科技与稳定币活动不凭行业标签收录。",
+    "source": null
+  },
+  {
+    "slug": "creator-economy",
+    "name": "创作者经济",
+    "en": "CREATOR ECONOMY",
+    "group": "创意与消费",
+    "color": "#b47850",
+    "description": "创作者的受众经营、品牌合作、内容业务与变现。普通媒体娱乐和泛社交不凭标签收录。",
+    "source": null
+  },
+  {
+    "slug": "ai-games",
+    "name": "AI 游戏与互动体验",
+    "en": "AI GAMES & XR",
+    "group": "创意与消费",
+    "color": "#84769a",
+    "description": "AI 游戏制作、可交互角色、生成式剧情和由 AI 驱动的沉浸体验。普通游戏聚会、XR 展示和标题中的 play 不单独构成收录依据。",
+    "source": null
+  },
+  {
+    "slug": "ai-sales",
+    "name": "AI 销售",
+    "en": "AI SALES",
+    "group": "增长与商业",
+    "color": "#987046",
+    "description": "AI 在潜客发现、SDR、销售跟进、客户关系与成交中的应用。收录具体的销售产品、团队或工作流议题。",
+    "source": null
+  },
+  {
+    "slug": "ai-support",
+    "name": "AI 客服",
+    "en": "AI CUSTOMER SUPPORT",
+    "group": "企业应用",
+    "color": "#64858a",
+    "description": "AI 客服、客户支持、联系中心与 CX 工作流。语音可以是交互渠道，专题依据是为客户解决服务问题。",
+    "source": null
+  },
+  {
+    "slug": "ai-finance",
+    "name": "AI 财务与会计",
+    "en": "AI FINANCE & ACCOUNTING",
+    "group": "企业应用",
+    "color": "#8a8157",
+    "description": "AI 在记账、报销、财务分析、FP&A 与企业财务流程中的应用。融资、投资、量化交易和普通税务服务不在此范围。",
+    "source": null
+  },
+  {
+    "slug": "ai-legal",
+    "name": "AI 法律与合同",
+    "en": "AI LEGAL & CONTRACTS",
+    "group": "企业应用",
+    "color": "#82758d",
+    "description": "法律团队如何用 AI 处理合同、法律研究、审查与法律业务流程。关于 AI 的法律争议或普通创业法律咨询不自动归入。",
+    "source": null
+  },
+  {
+    "slug": "geo-aeo",
+    "name": "GEO／AEO",
+    "en": "GEO / AEO",
+    "group": "增长与商业",
+    "color": "#b27a44",
+    "description": "品牌、产品和内容如何被 ChatGPT 等答案引擎找到、引用和推荐。包括 AI 搜索可见度、推荐流量与生成式搜索优化。",
+    "source": null
+  },
+  {
+    "slug": "coding-agents",
+    "name": "Coding Agent 与软件工程",
+    "en": "CODING AGENTS & ENGINEERING",
+    "group": "Agent 与系统",
+    "color": "#6585a0",
+    "description": "代码 Agent、AI 编程工具与软件工程实践，覆盖代码库、测试、评审、上下文、部署和维护。与面向快速原型的应用搭建分别归类。",
+    "source": null
+  },
+  {
+    "slug": "ai-bio",
+    "name": "AI 生物与药物研发",
+    "en": "AI BIOLOGY & DRUG DISCOVERY",
+    "group": "前沿与产业",
+    "color": "#718961",
+    "description": "AI 在生物研究、药物发现、分子设计与实验流程中的应用。普通生物科技、长寿投资和消费健康活动不凭标签收录。",
+    "source": null
+  },
+  {
+    "slug": "post-training",
+    "name": "模型后训练与微调",
+    "en": "POST-TRAINING & FINE-TUNING",
+    "group": "模型与基础设施",
+    "color": "#90775c",
+    "description": "模型后训练、微调、强化学习、偏好优化与模型行为改进。与开放权重模型的部署、自托管分别归类。",
+    "source": null
+  }
+]

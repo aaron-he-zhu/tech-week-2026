@@ -1,0 +1,60 @@
+<div class="crumb">
+  <a href="/">首页</a>
+  <span>/</span>
+  <span>我的 Wishlist</span>
+</div>
+<section class="topic-hero topic-summary">
+  <div>
+    <div class="eyebrow">YOUR TECH WEEK</div>
+    <h1 id="wishlist-title">我的 Wishlist</h1>
+    <p class="intro" id="wishlist-intro">把想去的活动放在一起。免注册，跨设备可用恢复链接找回。</p>
+  </div>
+</section>
+<section id="google-account" class="google-account" hidden>
+  <h2>保存并同步</h2>
+  <div id="google-connect">
+    <p>用 Google 找回你的收藏、地址爆料和评分。免注册功能继续可用。</p>
+    <button type="button" id="google-start" class="wish-action">用 Google 保存并同步</button>
+    <div id="google-button-wrap" hidden>
+      <div id="google-button"> </div>
+    </div>
+    <details class="google-merge-details">
+      <summary>登录后如何处理现有记录</summary>
+      <p>此设备的匿名记录会合并到所选 Google 账号。同场收藏去重，地址和评分保留最近修改的一份；已有账号保留原昵称。匿名记录原有的恢复与分享链接将停用，登录后可重新创建只读分享。</p>
+    </details>
+    <p class="site-caption">公开仍使用你设置的昵称，Google 姓名、头像和邮箱不会自动公开。<a href="/privacy/">数据与隐私</a> </p>
+  </div>
+  <div id="google-connected" hidden>
+    <p>已使用 Google 同步</p>
+    <p id="google-account-email" class="private-email"> </p>
+    <p class="site-caption">邮箱仅自己可见。其他设备登录同一账号即可找回记录。</p>
+    <button type="button" id="google-logout" class="wish-action">退出此设备</button>
+  </div>
+  <p id="google-status" class="site-caption" role="status"> </p>
+</section>
+<section id="wish-profile" class="wish-profile">
+  <div>
+    <label for="wish-nickname">公开昵称 <span>选填 · 最多 24 个字</span> </label>
+    <p class="site-caption">昵称会公开显示在收藏、地址爆料和评分中。留空显示“匿名访客”，随时可以修改。</p>
+    <div class="nickname-editor">
+      <input id="wish-nickname" type="text" maxlength="48" placeholder="你的昵称" autocomplete="off" aria-describedby="wish-profile-help" />
+      <button id="wish-nickname-save" type="button" class="wish-action">保存昵称</button>
+    </div>
+    <p id="wish-profile-help" class="site-caption">昵称用于展示，不是登录凭证。不会公开你的恢复链接。</p>
+  </div>
+  <details class="wish-tools">
+    <summary>跨设备与分享</summary>
+    <p id="wish-recovery-help">恢复链接用于编辑你的清单，请只留给自己。分享链接仅供查看；公开名单不会链接到你的完整清单。</p>
+    <div class="wish-tool-buttons">
+      <button type="button" id="wish-restore-copy" class="wish-action">复制个人恢复链接</button>
+      <button type="button" id="wish-share" class="wish-action">复制只读分享链接</button>
+      <button type="button" id="wish-share-revoke" class="wish-action">停用分享链接</button>
+    </div>
+    <textarea id="wish-link" readonly hidden aria-label="待复制链接"></textarea>
+  </details>
+  <div id="wish-restore-panel" class="notice" hidden>
+    <strong>在此设备恢复清单</strong>
+    <p>会切换当前使用的清单，不合并收藏。如果此设备已有清单，请先复制上方个人恢复链接留存。</p>
+    <button type="button" id="wish-restore-apply" class="wish-action">恢复这个 Wishlist</button>
+  </div> </section
+>{{ listing_html }}

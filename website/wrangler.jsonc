@@ -1,0 +1,6 @@
+{
+  "name": "tech-week-2026-guide",
+  "compatibility_date": "2026-10-03",
+  "assets": { "directory": "./dist", "not_found_handling": "404-page" },
+  "workers_dev": true
+}

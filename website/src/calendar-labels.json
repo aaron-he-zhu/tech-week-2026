@@ -1,0 +1,48 @@
+{
+  "T": {
+    "AI": "人工智能",
+    "B2B": "企业服务",
+    "Fundraising / Investing": "融资／投资",
+    "Engineering": "工程技术",
+    "Deep Tech": "硬科技",
+    "GTM": "市场拓展与增长",
+    "Infrastructure": "基础设施",
+    "B2C / Consumer": "消费科技",
+    "SaaS": "SaaS 软件",
+    "Healthcare / Healthtech": "医疗与健康科技",
+    "Fintech": "金融科技",
+    "Creators": "创作者",
+    "Hardware": "硬件",
+    "International / Expansion": "国际化／出海",
+    "Media / Entertainment": "媒体／娱乐",
+    "HR / Hiring": "人力资源／招聘",
+    "Women-focused": "女性主题",
+    "Cybersecurity": "网络安全",
+    "Defense": "国防科技",
+    "Climate": "气候科技",
+    "Crypto / Web3": "加密资产／Web3",
+    "Gaming": "游戏",
+    "AR / VR": "增强／虚拟现实"
+  },
+  "F": {
+    "Networking": "社交交流",
+    "Panel / Fireside Chat": "圆桌／炉边对谈",
+    "Happy Hour": "酒会",
+    "Experiential": "体验活动",
+    "Roundtable / Workshop": "小组讨论／工作坊",
+    "Breakfast, Brunch or Lunch": "早餐／早午餐／午餐",
+    "Pitch Event / Demo Day": "路演／产品演示",
+    "Dinner": "晚餐",
+    "Hackathon": "黑客松",
+    "Matchmaking": "定向匹配"
+  },
+  "R": {
+    "open": "官网显示开放申请",
+    "waitlist": "候补",
+    "closed": "关闭",
+    "full": "已满",
+    "unknown": "未知"
+  },
+  "notes": {},
+  "luma": {}
+}

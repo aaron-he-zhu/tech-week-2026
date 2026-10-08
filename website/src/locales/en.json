@@ -464,5 +464,17 @@
   "报名状态为 2026-10-05 快照。跨日活动会出现在其涵盖的日期；具体每日时段请核对主办方议程。": "Registration statuses are a 2026-10-05 snapshot. Multi-day events appear on each covered date; check the organizer’s agenda for daily opening times.",
   "按 30 个专题浏览简介、时间与报名信息。": "Browse summaries, times and registration across 30 topics.",
   "页面未找到 · Tech Week 2026 活动指南": "Page not found · Tech Week 2026 Field Guide",
-  "更新记录": "Updates"
+  "更新记录": "Updates",
+  "浏览专题 ↓": "Browse topics ↓",
+  "活动日历": "Event calendar",
+  "全部日程 ↗": "Full calendar ↗",
+  "点日期查看日程 · 数字为当日场次 · PDT": "Pick a date · Daily event counts · PDT",
+  "星期一": "Mon",
+  "星期二": "Tue",
+  "星期三": "Wed",
+  "星期四": "Thu",
+  "星期五": "Fri",
+  "星期六": "Sat",
+  "星期日": "Sun",
+  "数据更新 ↗": "Updates ↗"
 }

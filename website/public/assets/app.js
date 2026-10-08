@@ -14,6 +14,15 @@ const pageData = $('#page-data');
 if (pageData) {
   const data = JSON.parse(pageData.textContent);
   if (data.type === 'home') {
+    const today = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Los_Angeles',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(new Date());
+    $$('[data-home-date]').forEach((link) => {
+      if (link.dataset.homeDate === today) link.setAttribute('aria-current', 'date');
+    });
     let city = ['sf', 'la'].includes(params.get('city')) ? params.get('city') : 'all',
       group = data.topics.some((t) => t.group === params.get('group'))
         ? params.get('group')

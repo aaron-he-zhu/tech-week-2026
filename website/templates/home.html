@@ -6,24 +6,35 @@
       <em>SF · LA 活动指南</em>
     </h1>
     <p>旧金山与洛杉矶的 {{ total_count }} 场活动。<br />按 {{ topic_count }} 个专题浏览简介、时间与报名信息。</p>
-    <a class="text-link" href="/updates/">{{ updated_short }} 全量更新记录 ↗</a>
-  </div>
-  <div class="city-board">
-    <div class="city-line">
-      <span class="city-code">SF</span>
-      <span class="city-name">SAN FRANCISCO</span>
-      <span class="city-date">OCT 05 — 11</span>
-    </div>
-    <div class="city-line">
-      <span class="city-code">LA</span>
-      <span class="city-name">LOS ANGELES</span>
-      <span class="city-date">OCT 12 — 18</span>
-    </div>
-    <div class="city-board-foot">
-      <span>{{ sf_count }} 场 SF · {{ la_count }} 场 LA</span>
-      <span>更新于 {{ updated_short }}</span>
+    <div class="hero-links">
+      <a class="text-link" href="#topics">浏览专题 ↓</a>
+      <a class="text-link" href="/updates/">{{ updated_short }} 数据更新 ↗</a>
     </div>
   </div>
+  <section class="home-calendar" aria-labelledby="home-calendar-heading">
+    <div class="home-calendar-head">
+      <h2 id="home-calendar-heading">活动日历</h2>
+      <a href="/events/?view=calendar&amp;sort=time">全部日程 ↗</a>
+    </div>
+    {% for week in calendar_weeks %}
+    <div class="home-calendar-week">
+      <div class="home-calendar-city">
+        <h3>{{ week.city | upper }} <span>OCT {{ "%02d" | format(week.days[0].day) }} — {{ "%02d" | format(week.days[-1].day) }}</span></h3>
+        <span>{{ sf_count if week.city == "sf" else la_count }} 场活动</span>
+      </div>
+      <div class="home-calendar-dates">
+        {% for day in week.days %}
+        <a class="home-calendar-date" data-home-date="{{ day.date }}" href="/events/?city={{ week.city }}&amp;date={{ day.date }}&amp;view=calendar&amp;sort=time" aria-label="{{ week.city | upper }} · {{ day.date }} · {{ day.count }} 场活动">
+          <span class="home-calendar-weekday">{{ ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"][loop.index0] }}</span>
+          <strong>{{ day.day }}</strong>
+          <small>{{ day.count }}</small>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+    <p class="home-calendar-note">点日期查看日程 · 数字为当日场次 · PDT</p>
+  </section>
 </section>
 <section id="home-community-stats" class="home-community-stats" aria-labelledby="home-stats-heading">
   <div class="home-stats-heading">
@@ -39,7 +50,7 @@
     <p class="home-stats-note">启用 JavaScript 后可查看最新统计。</p>
   </noscript>
 </section>
-<section class="home-section">
+<section class="home-section" id="topics">
   <div class="section-head">
     <h2>活动专题</h2>
     <small id="topic-result" aria-live="polite">{{ topic_count }} 个专题</small>

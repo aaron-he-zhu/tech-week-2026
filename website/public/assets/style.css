@@ -173,40 +173,7 @@ h1 em {
   max-width: 510px;
   margin: 0;
 }
-.city-board {
-  border-top: 1px solid var(--ink);
-  padding-top: 14px;
-}
-.city-line {
-  display: grid;
-  grid-template-columns: 40px 1fr auto;
-  gap: 10px;
-  align-items: baseline;
-  padding: 9px 0;
-}
-.city-code {
-  font-family: ui-monospace, monospace;
-  font-weight: 700;
-  font-size: 20px;
-}
-.city-name {
-  font-size: 12px;
-  color: var(--muted);
-}
-.city-date {
-  font-size: 12px;
-  letter-spacing: 0.2px;
-}
-.city-board-foot {
-  border-top: 1px solid var(--line);
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 8px;
-  padding-top: 12px;
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-}
+
 .section-head {
   display: flex;
   justify-content: space-between;
@@ -889,34 +856,6 @@ h1 em {
   .eyebrow {
     font-size: 9px;
     letter-spacing: 1.8px;
-  }
-  .city-board {
-    padding-top: 9px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 15px;
-  }
-  .city-line {
-    flex: 1;
-    min-width: 140px;
-    grid-template-columns: 27px 1fr;
-    gap: 6px;
-    padding: 6px 0;
-  }
-  .city-code {
-    font-size: 16px;
-  }
-  .city-name {
-    display: none;
-  }
-  .city-date {
-    font-size: 10px;
-  }
-  .city-board-foot {
-    width: 100%;
-    margin-top: 5px;
-    padding-top: 9px;
-    font-size: 9px;
   }
   .topic-toolbar {
     flex-direction: column;
@@ -2137,4 +2076,172 @@ html[lang='en'] .home-stats-numbers p {
 }
 .calendar-agenda .event-card {
   margin-bottom: 12px;
+}
+
+/* The hero calendar links directly to the existing date-filtered agenda. */
+.hero {
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+}
+.home-calendar {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  padding: 18px;
+}
+.home-calendar-head,
+.home-calendar-city {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.home-calendar-head h2 {
+  margin: 0;
+  font-size: 17px;
+  letter-spacing: -0.3px;
+}
+.home-calendar-head a {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 0;
+}
+.home-calendar-week {
+  margin-top: 14px;
+}
+.home-calendar-city {
+  margin-bottom: 7px;
+}
+.home-calendar-city h3 {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+}
+.home-calendar-city span {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--muted);
+}
+.home-calendar-city h3 span {
+  margin-left: 7px;
+}
+.home-calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+.home-calendar-date {
+  display: flex;
+  min-height: 70px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: var(--paper);
+  line-height: 1.4;
+}
+.home-calendar-date small {
+  font-size: 10px;
+  color: var(--muted);
+}
+.home-calendar-weekday {
+  font-size: 10px;
+  color: var(--muted);
+}
+.home-calendar-date strong {
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.home-calendar-date:hover,
+.home-calendar-date:focus-visible {
+  border-color: var(--accent);
+  background: var(--sage);
+}
+.home-calendar-date[aria-current='date'] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--white);
+}
+.home-calendar-date[aria-current='date'] span,
+.home-calendar-date[aria-current='date'] small {
+  color: var(--white);
+}
+.hero .home-calendar-note {
+  margin-top: 12px;
+  font-size: 10px;
+  line-height: 1.5;
+}
+@media (max-width: 850px) {
+  .hero {
+    gap: 24px;
+  }
+}
+@media (max-width: 560px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 20px 0 24px;
+  }
+  .hero h1,
+  html[lang='en'] .hero h1 {
+    font-size: 32px;
+    line-height: 1.2;
+    margin: 10px 0;
+  }
+  .hero-links {
+    gap: 0 18px;
+    font-size: 11px;
+  }
+  .hero-links .text-link {
+    margin-top: 10px;
+  }
+  .home-calendar {
+    padding: 12px;
+  }
+  .home-calendar-head h2 {
+    font-size: 16px;
+  }
+  .home-calendar-week {
+    margin-top: 10px;
+  }
+  .home-calendar-dates {
+    gap: 4px;
+  }
+  .home-calendar-date {
+    min-height: 64px;
+    border-radius: 7px;
+  }
+  .hero .home-calendar-note {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero {
+    gap: 14px;
+    padding-top: 16px;
+  }
+  .hero .eyebrow {
+    display: none;
+  }
+  .hero h1,
+  html[lang='en'] .hero h1 {
+    font-size: 30px;
+  }
+  .hero > div > p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .home-calendar-date {
+    min-height: 60px;
+  }
 }

@@ -24,6 +24,7 @@ from data import (
     content_json,
     matched,
 )
+from home_calendar import calendar_weeks
 from localize import CATALOG, build_locales
 from rendering import json_for_script, render_template, safe_csv_copy
 from settings import API_URL
@@ -243,6 +244,7 @@ def main():
             updated_short=SHORT_STAMP,
             sf_count=format(SF, ","),
             la_count=format(LA, ","),
+            calendar_weeks=calendar_weeks(EVENTS),
             city_tabs_html=Markup(city_tabs()),
             search_html=Markup(search("topic-search", "搜索专题，如 视频、Harness")),
             category_tabs_html=Markup(

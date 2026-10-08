@@ -2092,6 +2092,45 @@ html[lang='en'] .home-stats-numbers p {
   flex-wrap: wrap;
   gap: 0 24px;
 }
+.home-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.home-shortcuts a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  min-height: 70px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--sage);
+}
+.home-shortcuts strong {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.home-shortcuts a > span {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.home-shortcuts a:hover,
+.home-shortcuts a:focus-visible {
+  border-color: var(--accent);
+}
+.home-stats-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
 .home-calendar {
   min-width: 0;
   border: 1px solid var(--line);

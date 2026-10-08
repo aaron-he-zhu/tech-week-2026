@@ -88,7 +88,7 @@
     window.addEventListener('online', refreshHomeStats);
   }
   C.markup = (e) =>
-    `<div class="event-actions"><div class="attendance-row">${W.markup(e)}<button type="button" class="community-entry" data-community="ratings" data-community-event="${esc(e.id)}"><span class="community-label">☆ 去过并评分</span><span data-rating-summary>查看 / 评 1–5 分 →</span></button></div><div class="community-row"><button type="button" class="community-entry" data-community="addresses" data-community-event="${esc(e.id)}"><span class="community-label">⌖ 地址爆料</span><span data-address-summary>查看 / 提供具体地址 →</span></button><button type="button" class="community-entry" data-community="transcripts" data-community-event="${esc(e.id)}"><span class="community-label">↗ 录音转写</span><span data-transcript-summary>查看 / 分享转写链接 →</span></button></div></div>`;
+    `<div class="event-actions"><div class="attendance-row">${W.markup(e)}<button type="button" class="community-entry" data-community="ratings" data-community-event="${esc(e.id)}"><span class="community-label">☆ 去过</span><span data-rating-summary>查看 / 评 1–5 分 →</span></button></div><div class="community-row"><button type="button" class="community-entry" data-community="addresses" data-community-event="${esc(e.id)}"><span class="community-label">⌖ 地址爆料</span><span data-address-summary>查看 / 提供具体地址 →</span></button><button type="button" class="community-entry" data-community="transcripts" data-community-event="${esc(e.id)}"><span class="community-label">↗ 录音转写</span><span data-transcript-summary>查看 / 分享转写链接 →</span></button></div></div>`;
   C.paintSummary = (summary) => {
     document.querySelectorAll('[data-community-event]').forEach((button) => {
       const row = summary[button.dataset.communityEvent];
@@ -126,7 +126,7 @@
   dialog.setAttribute('aria-labelledby', 'community-heading');
   dialog.innerHTML = `<div class="wish-dialog-head"><h2 id="community-heading">活动交流</h2><button type="button" data-community-close aria-label="关闭活动交流">×</button></div>
   <p id="community-event-name" class="community-event-name"></p>
-  <div class="community-tabs" role="group" aria-label="活动交流模块"><button type="button" data-community-tab="addresses" aria-pressed="true">地址爆料</button><button type="button" data-community-tab="ratings" aria-pressed="false">去过并评分</button><button type="button" data-community-tab="transcripts" aria-pressed="false">录音转写</button></div>
+  <div class="community-tabs" role="group" aria-label="活动交流模块"><button type="button" data-community-tab="addresses" aria-pressed="true">地址爆料</button><button type="button" data-community-tab="ratings" aria-pressed="false">去过</button><button type="button" data-community-tab="transcripts" aria-pressed="false">录音转写</button></div>
   <p id="community-feedback" class="community-feedback" role="status" hidden></p><button type="button" id="community-retry" class="wish-action" hidden>重新加载</button>
   <section id="community-addresses" aria-label="地址爆料"><p class="site-caption">访客提供的具体地址，未经主办方核实。若地址不同，请以主办方最新通知为准。</p>
    <div id="address-list" class="contribution-list"></div><button type="button" id="address-more" class="wish-action" hidden>更多地址爆料</button>
@@ -136,7 +136,7 @@
     <p class="site-caption">地址和说明各最多 300 个字，将连同昵称公开显示。</p><div class="contribution-actions"><button type="submit" class="wish-action primary-action">发布地址</button></div>
    </fieldset><button type="button" id="address-remove" class="wish-action" hidden>撤回我的地址</button></form>
   </section>
-  <section id="community-ratings" aria-label="去过并评分" hidden><div id="rating-summary" class="rating-summary"></div><p class="site-caption">参加情况由访客自报。每个免注册身份每场计一份评分，修改会替换原评分。</p>
+  <section id="community-ratings" aria-label="去过" hidden><div id="rating-summary" class="rating-summary"></div><p class="site-caption">参加情况由访客自报。每个免注册身份每场计一份评分，修改会替换原评分。</p>
    <div id="rating-list" class="contribution-list"></div><button type="button" id="rating-more" class="wish-action" hidden>更多评分</button>
    <form id="rating-form" class="contribution-form"><h3>我的参会评分</h3><p class="community-identity"></p><p id="rating-gate" class="site-caption" hidden>活动尚未开始，参加后再来评分。</p><fieldset>
     <label class="attended-confirm"><input id="rating-attended" type="checkbox" required>我已实际参加这场活动</label>
@@ -356,7 +356,7 @@
           (window.TWLocale.en
             ? result.ratingCount +
               (result.ratingCount === 1 ? ' attendee rated' : ' attendees rated')
-            : result.ratingCount + ' 人去过并评分')
+            : result.ratingCount + ' 人去过')
         : '暂无评分';
       $('#address-form').hidden = W.readOnly;
       $('#rating-form').hidden = W.readOnly;

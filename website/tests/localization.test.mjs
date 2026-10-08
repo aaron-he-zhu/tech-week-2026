@@ -32,7 +32,7 @@ function localePage({
 test('language switch preserves filters and sharing fragment, including translated format values', () => {
   const page = localePage({
     search:
-      '?city=sf&date=2026-10-05&format=Networking&sort=popular&q=Swedish&address=1&view=calendar',
+      '?city=sf&date=2026-10-05&format=Networking&sort=popular&q=Swedish&address=1&featured=1&view=calendar',
     hash: '#view=local-test',
   });
   page.click();
@@ -40,6 +40,7 @@ test('language switch preserves filters and sharing fragment, including translat
   assert.equal(url.pathname, '/zh/events/');
   assert.equal(url.hash, '#view=local-test');
   assert.equal(url.searchParams.get('address'), '1');
+  assert.equal(url.searchParams.get('featured'), '1');
   assert.equal(url.searchParams.get('view'), 'calendar');
   assert.equal(url.searchParams.get('format'), '社交交流');
   assert.equal(url.searchParams.get('q'), 'Swedish');

@@ -22,7 +22,7 @@ export async function addCommunitySummary(db, ids, events) {
   const transcripts = (
     await db
       .prepare(
-        `SELECT event_id,COUNT(*) AS count FROM transcript_links WHERE event_id IN (${marks}) GROUP BY event_id`,
+        `SELECT event_id,COUNT(*) AS count FROM transcript_entries WHERE event_id IN (${marks}) GROUP BY event_id`,
       )
       .bind(...ids)
       .all()
@@ -93,9 +93,9 @@ export async function readCommunity(db, id, visitor, params, fail) {
     result.transcripts = (
       await db
         .prepare(
-          'SELECT v.nickname,t.url,t.title,t.updated_at AS updatedAt FROM transcript_links t JOIN visitors v ON v.id=t.visitor_id WHERE t.event_id=? ORDER BY t.updated_at DESC,t.visitor_id LIMIT 20 OFFSET ?',
+          'SELECT t.id,v.nickname,t.url,t.title,t.updated_at AS updatedAt,t.visitor_id=? AS isMine FROM transcript_entries t JOIN visitors v ON v.id=t.visitor_id WHERE t.event_id=? ORDER BY t.updated_at DESC,t.id LIMIT 20 OFFSET ?',
         )
-        .bind(id, offset)
+        .bind(visitor?.id || '', id, offset)
         .all()
     ).results;
     result.nextTranscripts =
@@ -128,11 +128,25 @@ export async function readCommunity(db, id, visitor, params, fail) {
   return result;
 }
 
-export async function writeCommunity(db, id, visitor, kind, method, data, fail) {
+export async function writeCommunity(db, id, visitor, kind, method, data, fail, entryId = null) {
   const table = { addresses: 'address_tips', ratings: 'ratings', transcripts: 'transcript_links' }[
     kind
   ];
   if (!table) fail(400, '内容类型不正确');
+  if (kind === 'transcripts' && entryId && method === 'DELETE') {
+    await db.batch([
+      db
+        .prepare(
+          `DELETE FROM transcript_links WHERE event_id=? AND visitor_id=? AND EXISTS(
+        SELECT 1 FROM transcript_entries WHERE id=? AND event_id=? AND visitor_id=? AND legacy_key IS NOT NULL)`,
+        )
+        .bind(id, visitor.id, entryId, id, visitor.id),
+      db
+        .prepare('DELETE FROM transcript_entries WHERE id=? AND event_id=? AND visitor_id=?')
+        .bind(entryId, id, visitor.id),
+    ]);
+    return { removed: true };
+  }
   if (method === 'DELETE') {
     await db
       .prepare(`DELETE FROM ${table} WHERE event_id=? AND visitor_id=?`)
@@ -189,12 +203,35 @@ export async function writeCommunity(db, id, visitor, kind, method, data, fail) 
       .trim();
     if ([...title].length > 120 || hasUnsafeCharacters(title))
       fail(400, '标题最多 120 个字，请勿使用控制字符');
-    await db
-      .prepare(
-        'INSERT INTO transcript_links(visitor_id,event_id,url,title,updated_at) VALUES(?,?,?,?,?) ON CONFLICT(visitor_id,event_id) DO UPDATE SET url=excluded.url,title=excluded.title,updated_at=excluded.updated_at',
-      )
-      .bind(visitor.id, id, url.href, title, Date.now())
-      .run();
+    const now = Date.now();
+    if (entryId) {
+      // Updating a legacy entry also updates its compatibility slot in the same transaction.
+      const results = await db.batch([
+        db
+          .prepare(
+            `UPDATE transcript_links SET url=?,title=?,updated_at=? WHERE event_id=? AND visitor_id=? AND EXISTS(
+          SELECT 1 FROM transcript_entries WHERE id=? AND event_id=? AND visitor_id=? AND legacy_key IS NOT NULL)`,
+          )
+          .bind(url.href, title, now, id, visitor.id, entryId, id, visitor.id),
+        db
+          .prepare(
+            `INSERT INTO transcript_entries(id,visitor_id,event_id,url,title,updated_at) VALUES(?,?,?,?,?,?)
+          ON CONFLICT(id) DO UPDATE SET url=excluded.url,title=excluded.title,updated_at=excluded.updated_at
+          WHERE transcript_entries.visitor_id=excluded.visitor_id AND transcript_entries.event_id=excluded.event_id`,
+          )
+          .bind(entryId, visitor.id, id, url.href, title, now),
+      ]);
+      const saved = results[1];
+      if (!(saved.meta?.changes ?? saved.changes)) fail(404, '这条转写链接不存在或不属于你');
+    } else {
+      // Retained for previously loaded clients. This only edits their original slot.
+      await db
+        .prepare(
+          'INSERT INTO transcript_links(visitor_id,event_id,url,title,updated_at) VALUES(?,?,?,?,?) ON CONFLICT(visitor_id,event_id) DO UPDATE SET url=excluded.url,title=excluded.title,updated_at=excluded.updated_at',
+        )
+        .bind(visitor.id, id, url.href, title, now)
+        .run();
+    }
   } else {
     if (!Number.isInteger(data.score) || data.score < 1 || data.score > 5 || data.attended !== true)
       fail(400, '请确认实际参加过，并选择 1–5 分');

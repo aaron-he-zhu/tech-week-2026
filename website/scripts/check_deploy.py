@@ -56,6 +56,7 @@ for attempt in range(3):
         for route in ("/events/", "/zh/events/"):
             page = fetch(SITE + route)
             assert b'id="filter-address"' in page and b'id="calendar-grid"' in page
+            assert b'id="filter-featured"' in page
         print(
             "PASS: both homepages match this commit; live address stats, transcript links and Wishlist API respond."
         )

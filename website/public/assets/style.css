@@ -1432,9 +1432,10 @@ h1 em {
 }
 
 /* Event addresses, attendance ratings and shared transcripts. */
+.attendance-row,
 .community-row {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-top: 12px;
 }
@@ -1946,17 +1947,6 @@ html[lang='en'] .home-stats-numbers p {
   .community-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .community-entry[data-community='transcripts'] {
-    grid-column: 1 / -1;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-  .community-entry[data-community='transcripts'] .community-label {
-    margin-bottom: 0;
-  }
   .community-entry {
     min-width: 0;
   }
@@ -2257,4 +2247,50 @@ html[lang='en'] .home-stats-numbers p {
   .home-calendar-date {
     min-height: 60px;
   }
+}
+
+/* Two rows: attendance, then community resources. */
+.event-actions {
+  border-top: 1px solid var(--line);
+  margin-top: 16px;
+  padding-top: 4px;
+}
+.attendance-row .wish-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #f7f8f2;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.attendance-row .wish-toggle {
+  border: 0;
+  border-radius: 10px 10px 0 0;
+  background: transparent;
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.attendance-row .wish-toggle[aria-pressed='true'] {
+  background: var(--sage);
+}
+.attendance-row .wish-people {
+  text-align: left;
+  padding: 4px 12px 8px;
+  font-size: 10px;
+}
+.attendance-row .wish-names {
+  font-size: 10px;
+}
+.quick-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 20px;
 }

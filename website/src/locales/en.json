@@ -508,5 +508,15 @@
   "用 Google 找回你的收藏、地址爆料、评分和转写链接。免注册功能继续可用。": "Use Google to restore your saves, address tips, ratings and transcript links. You can still use the site without registration.",
   "此设备的匿名记录会合并到所选 Google 账号。同场收藏去重，地址、评分和转写链接各保留最近修改的一份；已有账号保留原昵称。匿名记录原有的恢复与分享链接将停用，登录后可重新创建只读分享。": "Anonymous records on this device will merge into the selected Google account. Duplicate saves are combined; the newest address, rating and transcript link per event are kept. Existing accounts keep their nickname. Old anonymous recovery and sharing links will stop working; you can create a new sharing link after signing in.",
   "昵称会公开显示在收藏、地址爆料、评分和转写链接中。留空显示“匿名访客”，随时可以修改。": "Your nickname is public on saves, address tips, ratings and transcript links. Leave it blank to appear as “Anonymous visitor.” You can change it at any time.",
-  "昵称已保存，会公开显示在收藏、地址爆料、评分和转写链接中。": "Nickname saved. It is public on saves, address tips, ratings and transcript links."
+  "昵称已保存，会公开显示在收藏、地址爆料、评分和转写链接中。": "Nickname saved. It is public on saves, address tips, ratings and transcript links.",
+  "同一场活动可以分多次分享链接，每条均可单独修改或撤回。标题最多 120 个字。": "Share multiple links for the same event. You can edit or withdraw each one separately. Titles can be up to 120 characters.",
+  "编辑这条链接": "Edit this link",
+  "撤回这条链接": "Withdraw this link",
+  "编辑转写链接": "Edit transcript link",
+  "保存链接修改": "Save link changes",
+  "取消编辑": "Cancel editing",
+  "这条转写链接不存在或不属于你": "This transcript link does not exist or does not belong to you.",
+  "只看官方精选": "Only official featured events",
+  "首次登录会将当前匿名身份的收藏、地址爆料、评分和转写链接合并到 Google 账号。同场收藏去重，地址和评分各保留最近修改的一份，转写链接全部保留，已有账号保留原昵称。被合并匿名身份的旧恢复与分享链接失效；可重新创建只读分享链接。": "The first sign-in merges your anonymous saves, address tips, ratings and transcript links into your Google account. Duplicate saves are combined; the newest address and rating per event are kept, along with all transcript links. Existing accounts keep their nickname. The merged anonymous identity’s old recovery and sharing links stop working; you can create a new sharing link.",
+  "此设备的匿名记录会合并到所选 Google 账号。同场收藏去重，地址和评分各保留最近修改的一份，转写链接全部保留；已有账号保留原昵称。匿名记录原有的恢复与分享链接将停用，登录后可重新创建只读分享。": "Anonymous records on this device will merge into the selected Google account. Duplicate saves are combined; the newest address and rating per event are kept, along with all transcript links. Existing accounts keep their nickname. Old anonymous recovery and sharing links will stop working; you can create a new sharing link after signing in."
 }

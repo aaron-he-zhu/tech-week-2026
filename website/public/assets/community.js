@@ -88,7 +88,7 @@
     window.addEventListener('online', refreshHomeStats);
   }
   C.markup = (e) =>
-    `<div class="community-row"><button type="button" class="community-entry" data-community="addresses" data-community-event="${esc(e.id)}"><span class="community-label">⌖ 地址爆料</span><span data-address-summary>查看 / 提供具体地址 →</span></button><button type="button" class="community-entry" data-community="ratings" data-community-event="${esc(e.id)}"><span class="community-label">☆ 去过并评分</span><span data-rating-summary>查看 / 评 1–5 分 →</span></button><button type="button" class="community-entry" data-community="transcripts" data-community-event="${esc(e.id)}"><span class="community-label">↗ 录音转写</span><span data-transcript-summary>查看 / 分享转写链接 →</span></button></div>`;
+    `<div class="event-actions"><div class="attendance-row">${W.markup(e)}<button type="button" class="community-entry" data-community="ratings" data-community-event="${esc(e.id)}"><span class="community-label">☆ 去过并评分</span><span data-rating-summary>查看 / 评 1–5 分 →</span></button></div><div class="community-row"><button type="button" class="community-entry" data-community="addresses" data-community-event="${esc(e.id)}"><span class="community-label">⌖ 地址爆料</span><span data-address-summary>查看 / 提供具体地址 →</span></button><button type="button" class="community-entry" data-community="transcripts" data-community-event="${esc(e.id)}"><span class="community-label">↗ 录音转写</span><span data-transcript-summary>查看 / 分享转写链接 →</span></button></div></div>`;
   C.paintSummary = (summary) => {
     document.querySelectorAll('[data-community-event]').forEach((button) => {
       const row = summary[button.dataset.communityEvent];
@@ -146,12 +146,12 @@
   </section>
   <section id="community-transcripts" aria-label="录音转写" hidden><p class="site-caption">大家分享的录音转写链接，点击后前往原网站阅读。</p>
    <div id="transcript-list" class="contribution-list"></div><button type="button" id="transcript-more" class="wish-action" hidden>更多转写链接</button>
-   <form id="transcript-form" class="contribution-form"><h3>分享录音转写</h3><p class="community-identity"></p><fieldset>
+   <form id="transcript-form" class="contribution-form"><h3 id="transcript-form-heading">分享录音转写</h3><p class="community-identity"></p><fieldset>
     <label for="transcript-url">转写链接</label><input id="transcript-url" type="url" inputmode="url" required maxlength="2000" placeholder="https://…" autocomplete="off" aria-describedby="transcript-visibility">
     <label for="transcript-title">链接标题 <span>选填</span></label><input id="transcript-title" maxlength="240" placeholder="例如：现场讨论完整转写" autocomplete="off">
-    <p id="transcript-visibility" class="site-caption">链接、标题和昵称将公开显示。请确认内容可以分享，并设置好原链接的访问权限。</p><p class="site-caption">每人每场可分享一条链接，支持修改或撤回。标题最多 120 个字。</p>
-    <div class="contribution-actions"><button type="submit" class="wish-action primary-action">发布转写链接</button></div>
-   </fieldset><button type="button" id="transcript-remove" class="wish-action" hidden>撤回我的链接</button></form>
+    <p id="transcript-visibility" class="site-caption">链接、标题和昵称将公开显示。请确认内容可以分享，并设置好原链接的访问权限。</p><p class="site-caption">同一场活动可以分多次分享链接，每条均可单独修改或撤回。标题最多 120 个字。</p>
+    <div class="contribution-actions"><button type="submit" class="wish-action primary-action">发布转写链接</button><button type="button" id="transcript-cancel" class="wish-action" hidden>取消编辑</button></div>
+   </fieldset></form>
   </section><p id="community-readonly" class="site-caption" hidden>这是只读分享页面。<a href="${window.TWLocale.path('/wishlist/')}">返回我的 Wishlist</a> 后可用自己的身份参与。</p>`;
   document.body.append(dialog);
   const $ = (s) => dialog.querySelector(s);
@@ -169,7 +169,8 @@
     ' PDT';
   let current = null,
     version = 0,
-    busy = false;
+    busy = false,
+    transcriptId = null;
   const feedback = (text, isError = false) => {
     const el = $('#community-feedback');
     el.textContent = text;
@@ -274,8 +275,45 @@
       source.className = 'contribution-note';
       source.textContent = url.hostname;
       article.append(meta, link, source);
+      if (row.isMine && !W.readOnly) {
+        const actions = document.createElement('div');
+        actions.className = 'contribution-actions';
+        for (const [label, action] of [
+          [
+            '编辑这条链接',
+            () => {
+              if (busy) return;
+              transcriptId = row.id;
+              $('#transcript-url').value = row.url;
+              $('#transcript-title').value = row.title;
+              $('#transcript-form-heading').textContent = '编辑转写链接';
+              $('#transcript-form button[type=submit]').textContent = '保存链接修改';
+              $('#transcript-cancel').hidden = false;
+              $('#transcript-url').focus();
+            },
+          ],
+          ['撤回这条链接', () => mutate('transcripts', 'DELETE', undefined, row.id)],
+        ]) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'wish-action';
+          button.dataset.transcriptAction = '';
+          button.textContent = label;
+          button.disabled = busy || (label === '编辑这条链接' && current.removed);
+          button.addEventListener('click', action);
+          actions.append(button);
+        }
+        article.append(actions);
+      }
       list.append(article);
     }
+  }
+  function resetTranscriptForm() {
+    transcriptId = null;
+    $('#transcript-form').reset();
+    $('#transcript-form-heading').textContent = '分享录音转写';
+    $('#transcript-form button[type=submit]').textContent = '发布转写链接';
+    $('#transcript-cancel').hidden = true;
   }
   function moreButton(selector, offset) {
     const b = $(selector);
@@ -289,7 +327,9 @@
     $('#transcript-form > fieldset').disabled = disabled;
     $('#address-remove').disabled = disabled;
     $('#rating-remove').disabled = disabled;
-    $('#transcript-remove').disabled = disabled;
+    dialog.querySelectorAll('[data-transcript-action]').forEach((button) => {
+      button.disabled = disabled || (current?.removed && button.textContent === '编辑这条链接');
+    });
   }
   async function load() {
     const active = current,
@@ -325,16 +365,9 @@
       identity();
       $('#address-form').reset();
       $('#rating-form').reset();
-      $('#transcript-form').reset();
+      resetTranscriptForm();
       const tip = result.mine?.address,
-        rating = result.mine?.rating,
-        transcript = result.mine?.transcript;
-      $('#transcript-url').value = transcript?.url || '';
-      $('#transcript-title').value = transcript?.title || '';
-      $('#transcript-remove').hidden = !transcript;
-      $('#transcript-form button[type=submit]').textContent = transcript
-        ? '更新我的链接'
-        : '发布转写链接';
+        rating = result.mine?.rating;
       $('#tip-address').value = tip?.address || '';
       $('#tip-note').value = tip?.note || '';
       $('#address-remove').hidden = !tip;
@@ -379,7 +412,7 @@
     $('#rating-summary').textContent = '';
     $('#address-form').reset();
     $('#rating-form').reset();
-    $('#transcript-form').reset();
+    resetTranscriptForm();
     $('#address-form').hidden = true;
     $('#rating-form').hidden = true;
     $('#transcript-form').hidden = true;
@@ -391,7 +424,7 @@
     dialog.scrollTop = 0;
     await load();
   }
-  async function mutate(target, method, data) {
+  async function mutate(target, method, data, entryId = null) {
     if (busy || W.readOnly) return;
     busy = true;
     const active = current;
@@ -399,7 +432,10 @@
     feedback('正在保存…');
     try {
       await W.ensureSession();
-      await W.request('/v1/' + target + '/' + active.id, { method, data });
+      await W.request('/v1/' + target + '/' + active.id + (entryId ? '/' + entryId : ''), {
+        method,
+        data,
+      });
       W.mount();
       if (target === 'addresses') await C.refreshAddressIndex(true);
       if (current === active && dialog.open) {
@@ -437,12 +473,18 @@
   });
   $('#transcript-form').addEventListener('submit', (event) => {
     event.preventDefault();
-    mutate('transcripts', 'PUT', {
-      url: $('#transcript-url').value,
-      title: $('#transcript-title').value,
-    });
+    transcriptId ||= crypto.randomUUID().replaceAll('-', '');
+    mutate(
+      'transcripts',
+      'PUT',
+      {
+        url: $('#transcript-url').value,
+        title: $('#transcript-title').value,
+      },
+      transcriptId,
+    );
   });
-  $('#transcript-remove').addEventListener('click', () => mutate('transcripts', 'DELETE'));
+  $('#transcript-cancel').addEventListener('click', resetTranscriptForm);
   $('#address-remove').addEventListener('click', () => mutate('addresses', 'DELETE'));
   $('#rating-remove').addEventListener('click', () => mutate('ratings', 'DELETE'));
   $('#community-retry').addEventListener('click', load);

@@ -50,13 +50,14 @@ When moving an existing site to a new source repository, preserve Worker names, 
 
 ## Upgrading existing databases for transcript links
 
-Before deploying code that shares recording transcripts, apply `website/backend/migrations/0001_transcript_links.sql` once using an authorized database administrator session with D1 Edit access. From `website/`, after `npm run prepare:deploy`:
+Before deploying code that shares recording transcripts, apply `website/backend/migrations/0001_transcript_links.sql` and then `0002_transcript_entries.sql` using an authorized database administrator session with D1 Edit access. From `website/`, after `npm run prepare:deploy`:
 
 ```sh
 npx wrangler d1 execute DB --remote --config .local/deploy/api.wrangler.json --file backend/migrations/0001_transcript_links.sql
+npx wrangler d1 execute DB --remote --config .local/deploy/api.wrangler.json --file backend/migrations/0002_transcript_entries.sql
 ```
 
-This file only creates the transcript-link table and index with `IF NOT EXISTS`. It can be repeated without changing existing records. New installations using the current `backend/schema.sql` already include this table. The GitHub deployment token only needs Workers deployment access; do not grant it database administration access for routine releases.
+These migrations add tables and indexes and copy existing links into individually addressable entries. They can be repeated without duplicating links or restoring withdrawn ones. Compatibility triggers mirror the original single-link slot while an older API or cached browser remains active. The new interface edits or withdraws individual entries; it also updates the legacy slot when applicable. Google merges transfer every entry and detach it from that slot before retiring the anonymous identity. New installations using the current `backend/schema.sql` already include these changes. The GitHub deployment token only needs Workers deployment access; do not grant it database administration access for routine releases.
 
 ## Normal releases
 

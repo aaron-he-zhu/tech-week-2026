@@ -10,6 +10,7 @@
       (!state.format || event.formats.includes(state.format)) &&
       (!state.purpose || event.purposes.includes(state.purpose)) &&
       (!state.status || event.status === state.status) &&
+      (!state.featured || event.featured === true) &&
       (!state.address || (addressCounts?.[event.id] || 0) > 0) &&
       (!query ||
         [

@@ -259,9 +259,12 @@ async function route(request, env, ctx) {
       .run();
     return { signedOut: true };
   }
-  const contribution = path.match(/^\/v1\/(addresses|ratings|transcripts)\/([a-f\d-]+)$/);
+  const contribution = path.match(
+    /^\/v1\/(addresses|ratings|transcripts)\/([a-f\d-]+)(?:\/([a-f\d]{32}))?$/,
+  );
   if (contribution && ['PUT', 'DELETE'].includes(method)) {
-    const [, kind, id] = contribution;
+    const [, kind, id, entryId] = contribution;
+    if (entryId && kind !== 'transcripts') fail(404, '内容类型不正确');
     if (!UUID.test(id)) fail(400, '活动编号不正确');
     if (method === 'PUT' && !IDS.has(id)) fail(404, '活动已移出当前日历，不能新增内容');
     return writeCommunity(
@@ -272,6 +275,7 @@ async function route(request, env, ctx) {
       method,
       method === 'PUT' ? await body(request) : null,
       fail,
+      entryId,
     );
   }
   if (path === '/v1/me' && method === 'PATCH') {

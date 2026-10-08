@@ -336,7 +336,14 @@ test('transcript links update without duplicates, expose only public fields and 
   assert.equal(result.transcriptCount, 2);
   assert.equal(result.mine, null);
   const own = result.transcripts.find((row) => row.nickname === 'Shared nickname');
-  assert.deepEqual(Object.keys(own).sort(), ['nickname', 'title', 'updatedAt', 'url']);
+  assert.deepEqual(Object.keys(own).sort(), [
+    'id',
+    'isMine',
+    'nickname',
+    'title',
+    'updatedAt',
+    'url',
+  ]);
   assert.equal(own.url, 'https://example.com/updated?view=full#transcript');
   assert.equal(own.title, '<b>Discussion</b>');
   assert.equal(
@@ -427,33 +434,127 @@ test('removed events cannot receive new transcript links but owners can withdraw
   assert.equal(DB.sql.prepare('SELECT COUNT(*) AS n FROM transcript_links').get().n, 0);
 });
 
-test('transcript storage migration is repeatable and preserves existing community records', async () => {
+test('each identity can add multiple links, retry safely and edit or withdraw only its own individual entry', async () => {
+  const { call, session } = fixture(),
+    a = await session(),
+    b = await session();
+  const first = '1'.repeat(32),
+    second = '2'.repeat(32);
+  const save = (token, entry, url) =>
+    call(`/v1/transcripts/${id}/${entry}`, { method: 'PUT', token, data: { url, title: 'Part' } });
+  assert.equal((await save(a, first, 'https://example.com/1')).status, 200);
+  assert.equal((await save(a, first, 'https://example.com/1')).status, 200);
+  assert.equal((await save(a, second, 'https://example.com/2')).status, 200);
+  assert.equal((await save(b, first, 'https://example.com/overwrite')).status, 404);
+  assert.equal(
+    (
+      await call(`/v1/transcripts/${future}/${first}`, {
+        method: 'PUT',
+        token: a,
+        data: { url: 'https://example.com/wrong-event' },
+      })
+    ).status,
+    404,
+  );
+  await call(`/v1/transcripts/${id}/${second}`, { method: 'DELETE', token: b });
+  const publicRows = (await call(`/v1/events/${id}/community`)).data;
+  assert.equal(publicRows.transcriptCount, 2);
+  assert.ok(publicRows.transcripts.every((row) => !row.isMine));
+  assert.ok(
+    (await call(`/v1/events/${id}/community`, { token: a })).data.transcripts.every(
+      (row) => row.isMine,
+    ),
+  );
+  assert.equal((await save(a, first, 'https://example.com/1-edited')).status, 200);
+  await call(`/v1/transcripts/${id}/${second}`, { method: 'DELETE', token: a });
+  await call(`/v1/transcripts/${id}/${second}`, { method: 'DELETE', token: a });
+  const remaining = (await call(`/v1/events/${id}/community`)).data;
+  assert.equal(remaining.transcriptCount, 1);
+  assert.equal(remaining.transcripts[0].url, 'https://example.com/1-edited');
+  const share = (await call('/v1/share', { method: 'POST', data: { enabled: true }, token: a }))
+    .data.shareToken;
+  assert.equal((await save(share, first, 'https://example.com/readonly')).status, 401);
+  assert.equal(
+    (await call(`/v1/transcripts/${id}/${first}`, { method: 'DELETE', token: share })).status,
+    401,
+  );
+});
+
+test('one contributor can have more than a page of transcript parts, including equal timestamps', async () => {
+  const { call, session } = fixture(),
+    token = await session();
+  for (let i = 0; i < 25; i++) {
+    const entry = i.toString(16).padStart(32, '0');
+    assert.equal(
+      (
+        await call(`/v1/transcripts/${id}/${entry}`, {
+          method: 'PUT',
+          token,
+          data: { url: `https://example.com/part/${i}` },
+        })
+      ).status,
+      200,
+    );
+  }
+  const first = (await call(`/v1/events/${id}/community?kind=transcripts`, { token })).data;
+  const next = (
+    await call(`/v1/events/${id}/community?kind=transcripts&offset=${first.nextTranscripts}`, {
+      token,
+    })
+  ).data;
+  assert.equal(first.transcriptCount, 25);
+  assert.equal(first.transcripts.length, 20);
+  assert.equal(next.transcripts.length, 5);
+  assert.equal(next.nextTranscripts, null);
+  assert.equal(new Set([...first.transcripts, ...next.transcripts].map((row) => row.id)).size, 25);
+  assert.ok([...first.transcripts, ...next.transcripts].every((row) => row.isMine));
+});
+
+test('repeatable upgrade keeps legacy links and cached clients without reviving withdrawals', async () => {
   const { readFileSync } = await import('node:fs');
   const { DB, call, session } = fixture(),
     token = await session();
   await call('/v1/addresses/' + id, { method: 'PUT', token, data: address });
-  await call('/v1/ratings/' + id, { method: 'PUT', token, data: { score: 4, attended: true } });
-  // Only this in-memory test database emulates an installation before the new table existed.
-  DB.sql.exec('DROP TABLE transcript_links');
-  const before = ['visitors', 'address_tips', 'ratings'].map((table) =>
-    DB.sql.prepare(`SELECT * FROM ${table}`).all(),
+  const before = DB.sql.prepare('SELECT * FROM address_tips').all();
+  // Emulate the previous schema in this in-memory test only.
+  DB.sql.exec(
+    'DROP TRIGGER transcript_legacy_insert; DROP TRIGGER transcript_legacy_update; DROP TRIGGER transcript_legacy_delete; DROP TABLE transcript_entries;',
   );
-  const migration = readFileSync(
-    new URL('../backend/migrations/0001_transcript_links.sql', import.meta.url),
-    'utf8',
-  );
-  DB.sql.exec(migration);
   await call('/v1/transcripts/' + id, {
     method: 'PUT',
     token,
-    data: { url: 'https://example.com/transcript' },
+    data: { url: 'https://example.com/original', title: 'Original' },
   });
-  DB.sql.exec(migration);
-  assert.deepEqual(
-    ['visitors', 'address_tips', 'ratings'].map((table) =>
-      DB.sql.prepare(`SELECT * FROM ${table}`).all(),
-    ),
-    before,
+  const migration = readFileSync(
+    new URL('../backend/migrations/0002_transcript_entries.sql', import.meta.url),
+    'utf8',
   );
-  assert.equal((await call('/v1/events/' + id + '/community')).data.transcriptCount, 1);
+  DB.sql.exec(migration);
+  let result = (await call(`/v1/events/${id}/community`, { token })).data;
+  const entry = result.transcripts[0].id;
+  assert.equal(result.transcripts[0].title, 'Original');
+  assert.equal(result.transcripts[0].isMine, 1);
+  DB.sql.exec(migration);
+  assert.equal((await call(`/v1/events/${id}/community`)).data.transcriptCount, 1);
+  await call(`/v1/transcripts/${id}/${entry}`, {
+    method: 'PUT',
+    token,
+    data: { url: 'https://example.com/edited' },
+  });
+  assert.equal(
+    (await call(`/v1/events/${id}/community`, { token })).data.mine.transcript.url,
+    'https://example.com/edited',
+  );
+  await call('/v1/transcripts/' + id, {
+    method: 'PUT',
+    token,
+    data: { url: 'https://example.com/cached-client' },
+  });
+  result = (await call(`/v1/events/${id}/community`)).data;
+  assert.equal(result.transcripts[0].id, entry);
+  assert.equal(result.transcripts[0].url, 'https://example.com/cached-client');
+  await call(`/v1/transcripts/${id}/${entry}`, { method: 'DELETE', token });
+  DB.sql.exec(migration);
+  assert.equal((await call(`/v1/events/${id}/community`)).data.transcriptCount, 0);
+  assert.deepEqual(DB.sql.prepare('SELECT * FROM address_tips').all(), before);
 });

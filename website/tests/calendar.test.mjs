@@ -59,3 +59,19 @@ test('calendar expands dates inclusively and sorts ongoing events before timed s
     '2026-10-08': 0,
   });
 });
+
+test('official featured filter intersects address, date and city filters and calendar counts', () => {
+  const featured = { ...event, featured: true };
+  const filter = { ...state, featured: true, address: true, city: 'sf', date: '2026-10-06' };
+  assert.equal(matches(featured, filter, { synthetic: 1 }), true);
+  assert.equal(matches({ ...featured, featured: false }, filter, { synthetic: 1 }), false);
+  assert.equal(matches(event, filter, { synthetic: 1 }), false);
+  assert.equal(matches(featured, filter, {}), false);
+  assert.equal(matches(featured, { ...filter, city: 'la' }, { synthetic: 1 }), false);
+  const candidates = [featured, { ...event, id: 'ordinary' }].filter((row) =>
+    matches(row, { ...state, featured: true }, null, true),
+  );
+  assert.deepEqual(JSON.parse(JSON.stringify(dayCounts(candidates, ['2026-10-06']))), {
+    '2026-10-06': 1,
+  });
+});

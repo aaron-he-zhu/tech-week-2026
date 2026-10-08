@@ -90,6 +90,7 @@ if (pageData) {
       sort: valid('sort', ['time', 'relevance', 'popular'], 'time'),
       q: params.get('q') || '',
       address: params.get('address') === '1',
+      featured: params.get('featured') === '1',
       view: valid('view', ['list', 'calendar'], 'list'),
       limit: 12,
     };
@@ -122,6 +123,7 @@ if (pageData) {
     const dayDate = (day) => new Date(day + 'T12:00:00Z');
     $('#event-search').value = state.q;
     $('#filter-address').checked = state.address;
+    $('#filter-featured').checked = state.featured;
     $('#calendar-picker').open = state.view === 'calendar';
     const card = (e, day = e.date) => {
       const status =
@@ -137,7 +139,7 @@ if (pageData) {
         : e.featured
           ? '官网精选'
           : e.formats.slice(0, 2).join(' · ');
-      return `<article class="event-card" data-event-id="${escapeText(e.id)}"><div class="event-meta"><span class="date-label">${escapeText(day.slice(5).replace('-', '/'))} · ${day > e.date ? '跨日活动' : escapeText(e.time)}</span><span class="pill ${escapeText(e.city)}">${e.city.toUpperCase()}</span>${e.featured ? '<span class="pill">官网精选</span>' : ''}<span class="status ${escapeText(e.status)}">${status}</span></div><h3><a href="${escapeText(e.url)}" target="_blank" rel="noopener noreferrer">${escapeText(e.name)}</a></h3><p class="event-summary">${escapeText(e.brief)}</p><div class="event-host">${escapeText(e.hosts.join(' / '))}</div><div class="event-host">${escapeText(e.place)}${e.endDate && e.endDate !== e.date ? ' · 持续至 ' + escapeText(e.endDate.slice(5).replace('-', '/')) : ''}</div>${e.note ? '<p class="event-note">' + escapeText(e.note) + '</p>' : ''}<div class="event-bottom"><span class="match-note">${escapeText(match)}</span><span class="source-links">${e.lumaUrl ? '<a href="' + escapeText(e.lumaUrl) + '" target="_blank" rel="noopener noreferrer">Luma ↗</a>' : ''}<a href="${escapeText(e.url)}" target="_blank" rel="noopener noreferrer">官网 ↗</a></span></div>${window.Wishlist?.markup(e) || ''}${window.Community?.markup(e) || ''}</article>`;
+      return `<article class="event-card" data-event-id="${escapeText(e.id)}"><div class="event-meta"><span class="date-label">${escapeText(day.slice(5).replace('-', '/'))} · ${day > e.date ? '跨日活动' : escapeText(e.time)}</span><span class="pill ${escapeText(e.city)}">${e.city.toUpperCase()}</span>${e.featured ? '<span class="pill">官网精选</span>' : ''}<span class="status ${escapeText(e.status)}">${status}</span></div><h3><a href="${escapeText(e.url)}" target="_blank" rel="noopener noreferrer">${escapeText(e.name)}</a></h3><p class="event-summary">${escapeText(e.brief)}</p><div class="event-host">${escapeText(e.hosts.join(' / '))}</div><div class="event-host">${escapeText(e.place)}${e.endDate && e.endDate !== e.date ? ' · 持续至 ' + escapeText(e.endDate.slice(5).replace('-', '/')) : ''}</div>${e.note ? '<p class="event-note">' + escapeText(e.note) + '</p>' : ''}<div class="event-bottom"><span class="match-note">${escapeText(match)}</span><span class="source-links">${e.lumaUrl ? '<a href="' + escapeText(e.lumaUrl) + '" target="_blank" rel="noopener noreferrer">Luma ↗</a>' : ''}<a href="${escapeText(e.url)}" target="_blank" rel="noopener noreferrer">官网 ↗</a></span></div>${window.Community?.markup(e) || ''}</article>`;
     };
     let filtered = [];
     let calendarEntries = [];
@@ -255,6 +257,7 @@ if (pageData) {
       for (const key of ['city', 'date', 'format', 'purpose', 'status', 'sort', 'q'])
         if (state[key] && !(key === 'city' && state[key] === 'all')) query.set(key, state[key]);
       if (state.address) query.set('address', '1');
+      if (state.featured) query.set('featured', '1');
       if (state.view === 'calendar') query.set('view', 'calendar');
       history.replaceState(
         null,
@@ -283,6 +286,10 @@ if (pageData) {
         apply();
       }),
     );
+    $('#filter-featured').addEventListener('change', (event) => {
+      state.featured = event.target.checked;
+      apply();
+    });
     $('#filter-address').addEventListener('change', (event) => {
       state.address = event.target.checked;
       apply();
@@ -330,10 +337,12 @@ if (pageData) {
           q: '',
           sort: 'time',
           address: false,
+          featured: false,
         });
         for (const key of filterKeys) $('#filter-' + key).value = state[key];
         $('#event-search').value = '';
         $('#filter-address').checked = false;
+        $('#filter-featured').checked = false;
         apply();
       }),
     );

@@ -121,10 +121,7 @@ export async function mergeGoogleIdentity(db, source, sessionHash, challengeId, 
         )
         .bind(target, source.id),
       db
-        .prepare(
-          `INSERT INTO transcript_links(visitor_id,event_id,url,title,updated_at) SELECT ?,event_id,url,title,updated_at FROM transcript_links WHERE visitor_id=?
-    ON CONFLICT(visitor_id,event_id) DO UPDATE SET url=excluded.url,title=excluded.title,updated_at=excluded.updated_at WHERE excluded.updated_at>transcript_links.updated_at`,
-        )
+        .prepare('UPDATE transcript_entries SET visitor_id=?,legacy_key=NULL WHERE visitor_id=?')
         .bind(target, source.id),
       db
         .prepare(

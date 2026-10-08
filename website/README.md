@@ -10,6 +10,8 @@ A fresh checkout builds 30 fictional demonstration events, one per topic. A visi
 
 Both languages share event IDs, taxonomy, dates and counts. Topics sort by event count; events sort chronologically. List and calendar views work on event, topic and Wishlist pages. Calendar date buttons show counts after the other filters are applied; multiday events appear on each covered day, using the published Pacific calendar dates.
 
+The “Only official featured events” filter uses the calendar’s `featured` flag. It combines with all other filters, updates calendar day counts and persists as `featured=1` in the URL.
+
 The address-tip filter calls `/v1/community/address-events`, which returns event IDs and current retained tip counts only. It refreshes every 30 seconds while enabled and visible, and immediately after the visitor changes an address tip. Failed requests show a retry state; previous results remain labeled as stale. Filter and view selections survive language switching and URL sharing.
 
 ## Build, preview and checks
@@ -56,7 +58,7 @@ The API Worker is `tech-week-wishlist`; the D1 database has the same name and bi
 
 Anonymous identities use random 256-bit credentials, kept in browser storage; the server stores hashes. Private recovery links use URL fragments, which are removed after reading. Optional read-only sharing links use separate revocable credentials. Public nickname lists expose neither credentials nor full Wishlist links. Counts deduplicate identities, not verified real people.
 
-Wishlist saves retain a snapshot. Current event details are shown with change notices; removed events remain in saved lists. Address tips allow one editable, removable submission per identity and event, with a public nickname and timestamp. Recording/transcript links allow one editable, removable HTTP(S) URL per identity and event, with an optional title, public nickname, source hostname and timestamp. The server validates links without fetching their contents; external links use `noopener noreferrer ugc nofollow`. Ratings require self-confirmed attendance and an integer from 1 to 5 after the event starts. Editing replaces the previous rating. Shared read-only pages cannot write as the owner. User text is rendered as text, with parameterized queries, validation, rate limits, restricted CORS and no-store API responses.
+Wishlist saves retain a snapshot. Current event details are shown with change notices; removed events remain in saved lists. Address tips allow one editable, removable submission per identity and event, with a public nickname and timestamp. Recording/transcript links allow multiple independently editable, removable HTTP(S) URLs per identity and event, with an optional title, public nickname, source hostname and timestamp. The server validates links without fetching their contents; external links use `noopener noreferrer ugc nofollow`. Ratings require self-confirmed attendance and an integer from 1 to 5 after the event starts. Editing replaces the previous rating. Shared read-only pages cannot write as the owner. User text is rendered as text, with parameterized queries, validation, rate limits, restricted CORS and no-store API responses.
 
 The homepage fetches `/v1/community/stats` on load, return to the foreground and network recovery, and every 30 seconds while visible. The endpoint returns current address-tip and distinct-event totals only. Edits do not add duplicates; withdrawals reduce counts. This is the current retained total, not historical submissions. No AI tokens or redeployment are needed for changes.
 
@@ -64,7 +66,7 @@ The homepage fetches `/v1/community/stats` on load, return to the foreground and
 
 Google Identity Services loads only after the visitor clicks sign-in. The API verifies signatures, issuer, audience, expiry and a session-bound single-use nonce using Google’s public keys. The account key is Google `sub`; email is shown only to its owner. Google name, photo and email do not become the public nickname. No Gmail, contacts, calendar or Drive access is requested.
 
-The first sign-in atomically merges the anonymous identity. Saves deduplicate, the newest address, rating and transcript link per event win, and an existing account keeps its nickname. Merged anonymous recovery and sharing links are retired. Sessions last 30 days; sign-out revokes the current device’s session without deleting records. Privacy pages are `/privacy/` and `/zh/privacy/`.
+The first sign-in atomically merges the anonymous identity. Saves deduplicate, the newest address and rating per event win, all transcript links are retained, and an existing account keeps its nickname. Merged anonymous recovery and sharing links are retired. Sessions last 30 days; sign-out revokes the current device’s session without deleting records. Privacy pages are `/privacy/` and `/zh/privacy/`.
 
 The existing Google web client and allowed site origin are retained; no client secret is needed. Real Google sign-in was previously blocked by the Codex in-app browser’s refusal to load Google Identity Services. Cryptographic and merge tests pass; a full real-account browser sign-in remains a separate verification limitation.
 

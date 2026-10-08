@@ -40,7 +40,7 @@ Default builds use the fictional examples in `examples/demo/`. Live content is k
 
 `npm run verify` checks formatting with Prettier/Ruff, JavaScript and Python lint, byte-for-byte reproducibility across clean builds, calendar coverage, bilingual data parity, and the automated test suites. `npm run format` applies the shared style. Builds render to a temporary directory before replacing `dist/`, so a rendering failure preserves the previous website artifact.
 
-GitHub Actions also scans Git history for credentials with a pinned Gitleaks binary and verified checksum. Pull requests run checks only. Enabled pushes to `main` deploy the API, then the website, followed by read-only live verification. Deployments require explicit configuration and apply only the additive, repeatable transcript-link migration before API deployment, and never write test contributions to production.
+GitHub Actions also scans Git history for credentials with a pinned Gitleaks binary and verified checksum. Pull requests run checks only. Enabled pushes to `main` deploy the API, then the website, followed by read-only live verification. Deployments require explicit configuration and never run database migrations or write test contributions to production. Existing databases need the one-time [transcript-link upgrade](docs/deployment.md#upgrading-existing-databases-for-transcript-links) before this version is deployed.
 
 ## Languages
 

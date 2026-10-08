@@ -40,7 +40,7 @@ npm run preview:wishlist
 
 `npm run verify` 包含 Prettier/Ruff 格式检查、JavaScript/Python 静态检查、两次干净构建的逐字节一致性校验、日历覆盖与双语数据校验，以及自动化测试。`npm run format` 应用统一格式。构建先写临时目录，渲染失败时保留上一份 `dist/`。
 
-GitHub Actions 还使用固定版本、校验过下载摘要的 Gitleaks 扫描 Git 历史。PR 只检查；开启部署的 `main` 推送依次发布 API 和网站，再进行只读验证。部署需要显式配置，在发布 API 前执行可重复的转写链接建表迁移，不修改已有用户记录，也不向线上写入测试内容。
+GitHub Actions 还使用固定版本、校验过下载摘要的 Gitleaks 扫描 Git 历史。PR 只检查；开启部署的 `main` 推送依次发布 API 和网站，再进行只读验证。部署需要显式配置，不自动执行数据库迁移，也不向线上写入测试内容。已有数据库须在发布此版本前完成一次[转写链接建表升级](docs/deployment.md#upgrading-existing-databases-for-transcript-links)，不修改原有用户记录。
 
 ## 双语维护
 

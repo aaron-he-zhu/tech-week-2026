@@ -24,7 +24,7 @@
   <section class="home-calendar" aria-labelledby="home-calendar-heading">
     <div class="home-calendar-head">
       <h2 id="home-calendar-heading">活动日历</h2>
-      <a href="/events/?view=calendar&amp;sort=time">全部日程 ↗</a>
+      <a href="/events/?sort=time">全部日程 ↗</a>
     </div>
     {% for week in calendar_weeks %}
     <div class="home-calendar-week">
@@ -34,7 +34,7 @@
       </div>
       <div class="home-calendar-dates">
         {% for day in week.days %}
-        <a class="home-calendar-date" data-home-date="{{ day.date }}" href="/events/?city={{ week.city }}&amp;date={{ day.date }}&amp;view=calendar&amp;sort=time" aria-label="{{ week.city | upper }} · {{ day.date }} · {{ day.count }} 场活动">
+        <a class="home-calendar-date" data-home-date="{{ day.date }}" href="/events/?city={{ week.city }}&amp;date={{ day.date }}&amp;sort=time" aria-label="{{ week.city | upper }} · {{ day.date }} · {{ day.count }} 场活动">
           <span class="home-calendar-weekday">{{ ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"][loop.index0] }}</span>
           <strong>{{ day.day }}</strong>
           <small>{{ day.count }}</small>

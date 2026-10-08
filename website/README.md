@@ -8,7 +8,7 @@ English (default) · [简体中文](README.zh-CN.md)
 
 A fresh checkout builds 30 fictional demonstration events, one per topic. A visible notice identifies demo pages. The live website uses a separate private content checkout for SF and LA events; current counts and the checked timestamp come from that content snapshot. Real snapshots, full organizer descriptions and visitor records are not distributed here. See [content format](../docs/content.md).
 
-Both languages share event IDs, taxonomy, dates and counts. Topics sort by event count; events sort chronologically. List and calendar views work on event, topic and Wishlist pages. Calendar date buttons show counts after the other filters are applied; multiday events appear on each covered day, using the published Pacific calendar dates.
+Both languages share event IDs, taxonomy, dates and counts. Topics sort by event count; events sort chronologically. Event, topic and Wishlist pages use the calendar view, with the date picker open by default. Calendar date buttons show counts after the other filters are applied; multiday events appear on each covered day, using the published Pacific calendar dates.
 
 The “Only official featured events” filter uses the calendar’s `featured` flag. It combines with all other filters, updates calendar day counts and persists as `featured=1` in the URL.
 

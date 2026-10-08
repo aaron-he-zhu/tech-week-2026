@@ -4,7 +4,7 @@
 
 手机阅读优先的独立双语活动指南：[英文网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/) · [中文网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/zh/)。
 
-线上指南覆盖 **SF、LA 官方活动与 30 个专题**；当前活动数与最近核对时间见[线上网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/zh/)。公开源码默认使用 **30 场虚构演示活动**，英文、中文各 37 页。专题按场次数量排序，活动按时间排序。支持列表、日历视图及只看有地址爆料的活动。支持免注册 Wishlist、公开昵称、地址爆料、录音转写链接分享、去过并打分，以及可选的 Google 登录和跨设备恢复。
+线上指南覆盖 **SF、LA 官方活动与 30 个专题**；当前活动数与最近核对时间见[线上网站](https://tech-week-2026-guide.aaron-he-zhu.workers.dev/zh/)。公开源码默认使用 **30 场虚构演示活动**，英文、中文各 37 页。专题按场次数量排序，活动按时间排序。统一使用日历视图，支持只看官方精选及有地址爆料的活动。支持免注册 Wishlist、公开昵称、地址爆料、录音转写链接分享、去过并打分，以及可选的 Google 登录和跨设备恢复。
 
 ## 本地运行
 

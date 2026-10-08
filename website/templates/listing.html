@@ -24,33 +24,21 @@
           <option value="closed">已关闭</option>
         </select>
       </div>
-      <div class="filter">
-        <label for="filter-sort">排列方式</label>
-        <select id="filter-sort">
-          <option value="time">活动时间（从早到晚）</option>
-          <option value="popular">最多人想去</option
-          >{{ relevance_option_html }}</select
-        >
-      </div>
     </div>
     <div class="explorer-toolbar">
       <div class="quick-filters"
         ><label class="address-filter"><input type="checkbox" id="filter-address" />只看有爆料地址</label><label class="address-filter"><input type="checkbox" id="filter-featured" />只看官方精选</label></div
       >
-      <div class="segments view-switch" role="group" aria-label="活动视图">
-        <button type="button" data-view="list" aria-pressed="true">列表</button>
-        <button type="button" data-view="calendar" aria-pressed="false">日历</button>
-      </div>
     </div>
     <div class="address-filter-feedback" id="address-filter-feedback" hidden> <p id="address-filter-status" role="status"></p><button type="button" id="address-filter-retry" class="reset" hidden>重试</button> </div>
-    <details class="calendar-picker" id="calendar-picker">
+    <details class="calendar-picker" id="calendar-picker" open>
       <summary>日历筛选 <span id="calendar-selection">所有日期</span></summary>
       <div class="calendar-heading"><h3 id="calendar-month"></h3><button type="button" class="reset" id="calendar-all">所有日期</button></div>
       <div class="calendar-weekdays" aria-hidden="true"><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span></div>
       <div class="calendar-grid" id="calendar-grid" role="group" aria-label="选择活动日期"></div>
       <p class="site-caption">日期下方是应用其他筛选后的活动数。跨日活动会计入覆盖的每一天。</p>
     </details>
-    <p id="calendar-view-note" class="site-caption" hidden>日历按日期和时间排列。跨日活动可能在多天出现，当日开放时段请核对主办方议程。</p>
+    <p class="site-caption">日历按日期和时间排列。跨日活动可能在多天出现，当日开放时段请核对主办方议程。</p>
     <div class="result-line">
       <span id="event-count" aria-live="polite">{{ event_count }} 场活动 · SF + LA</span>
       <button class="reset" data-reset>清除筛选</button>

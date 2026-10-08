@@ -87,21 +87,12 @@ if (pageData) {
       format: params.get('format') || '',
       purpose: $('#filter-purpose') ? params.get('purpose') || '' : '',
       status: valid('status', ['open', 'waitlist', 'full', 'closed'], ''),
-      sort: valid('sort', ['time', 'relevance', 'popular'], 'time'),
       q: params.get('q') || '',
       address: params.get('address') === '1',
       featured: params.get('featured') === '1',
-      view: valid('view', ['list', 'calendar'], 'list'),
       limit: 12,
     };
-    if (state.view === 'calendar') state.sort = 'time';
-    const filterKeys = [
-      'date',
-      'format',
-      'status',
-      'sort',
-      ...($('#filter-purpose') ? ['purpose'] : []),
-    ];
+    const filterKeys = ['date', 'format', 'status', ...($('#filter-purpose') ? ['purpose'] : [])];
     for (const key of filterKeys) {
       const element = $('#filter-' + key);
       if (![...element.options].some((option) => option.value === state[key]))
@@ -124,7 +115,6 @@ if (pageData) {
     $('#event-search').value = state.q;
     $('#filter-address').checked = state.address;
     $('#filter-featured').checked = state.featured;
-    $('#calendar-picker').open = state.view === 'calendar';
     const card = (e, day = e.date) => {
       const status =
         {
@@ -146,35 +136,27 @@ if (pageData) {
     const index = () => window.Community.addressIndex;
     const allEvents = () => (data.wishlist ? window.Wishlist.events(data.events) : data.events);
     const draw = () => {
-      if (state.view === 'calendar') {
-        let previous = '';
-        $('#event-list').innerHTML =
-          calendarEntries
-            .slice(0, state.limit)
-            .map(({ date, event }) => {
-              const heading =
-                date !== previous
-                  ? (previous ? '</div></section>' : '') +
-                    '<section class="calendar-day"><h2>' +
-                    escapeText(dayLabel.format(dayDate(date))) +
-                    '</h2><div class="calendar-agenda">'
-                  : '';
-              previous = date;
-              return heading + card(event, date);
-            })
-            .join('') + (previous ? '</div></section>' : '');
-      } else {
-        $('#event-list').innerHTML = filtered
+      let previous = '';
+      $('#event-list').innerHTML =
+        calendarEntries
           .slice(0, state.limit)
-          .map((event) => card(event))
-          .join('');
-      }
+          .map(({ date, event }) => {
+            const heading =
+              date !== previous
+                ? (previous ? '</div></section>' : '') +
+                  '<section class="calendar-day"><h2>' +
+                  escapeText(dayLabel.format(dayDate(date))) +
+                  '</h2><div class="calendar-agenda">'
+                : '';
+            previous = date;
+            return heading + card(event, date);
+          })
+          .join('') + (previous ? '</div></section>' : '');
       window.Wishlist?.mount();
-      const total = state.view === 'calendar' ? calendarEntries.length : filtered.length;
+      const total = calendarEntries.length;
       $('#load-more').hidden = total <= state.limit;
       const remaining = Math.min(12, Math.max(0, total - state.limit));
-      $('#load-more').textContent =
-        state.view === 'calendar' ? `再看 ${remaining} 项日程` : `再看 ${remaining} 场活动`;
+      $('#load-more').textContent = `再看 ${remaining} 项日程`;
     };
     function paintCalendar() {
       const candidates = allEvents().filter((event) =>
@@ -201,33 +183,11 @@ if (pageData) {
       filtered = allEvents().filter((event) =>
         window.EventCalendar.matches(event, state, index().counts),
       );
-      filtered.sort((a, b) =>
-        state.sort === 'popular'
-          ? (window.Wishlist.counts[b.id] || 0) - (window.Wishlist.counts[a.id] || 0) ||
-            a.date.localeCompare(b.date) ||
-            a.time.localeCompare(b.time)
-          : state.sort === 'relevance'
-            ? (b.match?.score || 0) - (a.match?.score || 0) ||
-              Number(b.featured) - Number(a.featured) ||
-              a.date.localeCompare(b.date) ||
-              a.time.localeCompare(b.time)
-            : a.date.localeCompare(b.date) ||
-              a.time.localeCompare(b.time) ||
-              a.name.localeCompare(b.name),
-      );
-      calendarEntries =
-        state.view === 'calendar'
-          ? window.EventCalendar.entries(filtered, state.date ? [state.date] : dates)
-          : [];
+      calendarEntries = window.EventCalendar.entries(filtered, state.date ? [state.date] : dates);
       if (!preserveLimit) state.limit = 12;
       draw();
       paintCalendar();
       cityButtons(state.city);
-      $$('[data-view]').forEach((button) =>
-        button.setAttribute('aria-pressed', String(button.dataset.view === state.view)),
-      );
-      $('#filter-sort').disabled = state.view === 'calendar';
-      $('#calendar-view-note').hidden = state.view !== 'calendar';
       const unavailable = state.address && index().counts === null;
       $('#event-count').textContent = unavailable
         ? index().error
@@ -254,11 +214,11 @@ if (pageData) {
           : '连接成功后会显示云端清单；加载失败时，请查看下方提示并刷新重试。';
       }
       const query = new URLSearchParams();
-      for (const key of ['city', 'date', 'format', 'purpose', 'status', 'sort', 'q'])
+      for (const key of ['city', 'date', 'format', 'purpose', 'status', 'q'])
         if (state[key] && !(key === 'city' && state[key] === 'all')) query.set(key, state[key]);
+      query.set('sort', 'time');
       if (state.address) query.set('address', '1');
       if (state.featured) query.set('featured', '1');
-      if (state.view === 'calendar') query.set('view', 'calendar');
       history.replaceState(
         null,
         '',
@@ -275,17 +235,6 @@ if (pageData) {
       if (button) selectDate(button.dataset.calendarDate);
     });
     $('#calendar-all').addEventListener('click', () => selectDate(''));
-    $$('[data-view]').forEach((button) =>
-      button.addEventListener('click', () => {
-        state.view = button.dataset.view;
-        if (state.view === 'calendar') {
-          state.sort = 'time';
-          $('#filter-sort').value = 'time';
-          $('#calendar-picker').open = true;
-        }
-        apply();
-      }),
-    );
     $('#filter-featured').addEventListener('change', (event) => {
       state.featured = event.target.checked;
       apply();
@@ -335,7 +284,6 @@ if (pageData) {
           purpose: '',
           status: '',
           q: '',
-          sort: 'time',
           address: false,
           featured: false,
         });
@@ -360,7 +308,7 @@ if (pageData) {
     });
     if (window.Wishlist) {
       window.Wishlist.onChange = () => {
-        if (data.wishlist || state.sort === 'popular') apply();
+        if (data.wishlist) apply();
         else window.Wishlist.mount();
       };
       window.Wishlist.ready.then(apply);

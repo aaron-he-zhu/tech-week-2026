@@ -1977,13 +1977,6 @@ html[lang='en'] .home-stats-numbers p {
   height: 18px;
   accent-color: var(--accent);
 }
-.view-switch {
-  margin: 0;
-}
-.view-switch button {
-  min-width: 68px;
-  min-height: 44px;
-}
 .address-filter-feedback {
   border-left: 3px solid var(--accent);
   padding: 4px 12px;

@@ -334,9 +334,6 @@ def main():
                 purpose_filter_html=Markup(purpose_filter),
                 date_options_html=Markup(options(dates, "所有日期")),
                 format_options_html=Markup(options(formats, "所有形式")),
-                relevance_option_html=Markup(
-                    '<option value="relevance">相关程度</option>' if t else ""
-                ),
                 event_count=format(len(es), ","),
                 event_cards_html=Markup(
                     "".join((event_card(e) for e in es[:12])) if not wishlist else ""
